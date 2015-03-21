@@ -22,7 +22,7 @@ class Task(models.Model):
 @python_2_unicode_compatible
 class Project(models.Model):
     name = models.CharField(max_length=30, verbose_name=_('Project name'))
-    user = models.ForeignKey(User, related_name='projects', verbose_name=_('User'))
+    user = models.ForeignKey(User, null=True, related_name='projects', verbose_name=_('User'))
     tasks = models.ManyToManyField(Task, related_name='project', verbose_name=_('Tasks'))
 
     def __str__(self):
