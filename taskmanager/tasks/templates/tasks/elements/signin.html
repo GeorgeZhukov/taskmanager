@@ -1,0 +1,18 @@
+{% load bootstrap3 i18n %}
+<div id="sign-in-wrapper">
+    <h2>{% trans 'Sign In' %}</h2>
+
+    <form id="sign-in" class="form" role="form">
+        {% csrf_token %}
+        {% bootstrap_form view.get_signin_form %}
+        <div class="btn-group" role="group">
+            <button class="btn btn-info" type="button" data-toggle="modal" data-target="#signupModal">
+                <span class="glyphicon glyphicon-plus"></span> {% trans 'Sign Up' %}
+            </button>
+            <button class="btn btn-primary" type="button" onclick="login();">
+                <span class="glyphicon glyphicon-user"></span> {% trans 'Sign In' %}
+            </button>
+        </div>
+
+    </form>
+</div>

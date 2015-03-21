@@ -1,0 +1,52 @@
+html, body {
+    height: 100%;
+}
+body {
+    background-color: #464646;
+}
+#page {
+    height: 90%;
+}
+#projects-wrapper {
+    width: 600px;
+}
+
+
+#sign-in-wrapper {
+    margin: 60px auto;
+    background-color: #ededed;
+    padding: 20px;
+    width: 300px;
+    border-radius: 4px;
+    border: 1px solid #000000;
+}
+
+.project {
+    margin-top: 20px;
+    background: #ffffff;
+    min-height: 160px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.project .header {
+    color: #fafafa;
+    background-color: #599fcf;
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+}
+.project .header span {
+    color: #464646;
+    margin: 0 6px;
+}
+.project .new-task {
+    padding: 4px 10px;
+    background-color: #868686;
+}
+
+#footer {
+    color: #ececec;
+    background-color: #242424;
+    padding: 20px 0;
+}

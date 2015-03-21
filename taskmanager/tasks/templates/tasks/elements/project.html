@@ -1,0 +1,42 @@
+{% load i18n %}
+<div class="project">
+
+    <div class="header">
+        <div class="row">
+            <div class="col-md-8">
+                <span class="glyphicon glyphicon-calendar"></span>{{ project.name }}Header
+            </div>
+            <div class="col-md-4">
+                <div class="pull-right">
+                    <button class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button class="btn btn-link"><span class="glyphicon glyphicon-trash"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="new-task">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
+            </span>
+            <input type="text" class="form-control" id="new-task-name"
+                   placeholder="{% trans 'Start typing here to create a task' %}">
+            <span class="input-group-btn">
+                <button class="btn btn-success">{% trans 'Add task' %}</button>
+            </span>
+        </div>
+    </div>
+    <div class="body">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td>
+                    <input type="checkbox"/>
+                </td>
+                <td>Lorem ipsum dolor.</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
