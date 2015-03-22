@@ -3,11 +3,7 @@ from django.contrib import admin
 
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'taskmanager.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
     url(r'^', include('tasks.urls', namespace='tasks')),
-    url(r'^accounts/', include('allauth.urls')),
-
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
 )
