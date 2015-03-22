@@ -7,7 +7,21 @@ from django.utils.translation import ugettext_lazy as _
 
 
 @python_2_unicode_compatible
+class Project(models.Model):
+    name = models.CharField(max_length=30, verbose_name=_('Project name'))
+    user = models.ForeignKey(User, null=True, related_name='projects', verbose_name=_('User'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Project')
+        verbose_name_plural = _('Projects')
+
+
+@python_2_unicode_compatible
 class Task(models.Model):
+    project = models.ForeignKey(Project, related_name='tasks', verbose_name=_('Project'))
     content = models.TextField(verbose_name=_('Task content'))
     deadline = models.DateTimeField(verbose_name=_('Deadline'))
 
@@ -17,17 +31,3 @@ class Task(models.Model):
     class Meta:
         verbose_name = _('Task')
         verbose_name_plural = _('Tasks')
-
-
-@python_2_unicode_compatible
-class Project(models.Model):
-    name = models.CharField(max_length=30, verbose_name=_('Project name'))
-    user = models.ForeignKey(User, null=True, related_name='projects', verbose_name=_('User'))
-    tasks = models.ManyToManyField(Task, related_name='project', verbose_name=_('Tasks'))
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _('Project')
-        verbose_name_plural = _('Projects')

@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=30, verbose_name='Project name')),
+                ('user', models.ForeignKey(related_name='projects', verbose_name='User', to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'verbose_name': 'Project',
@@ -30,23 +31,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('content', models.TextField(verbose_name='Task content')),
                 ('deadline', models.DateTimeField(verbose_name='Deadline')),
+                ('project', models.ForeignKey(related_name='tasks', verbose_name='Project', to='tasks.Project')),
             ],
             options={
                 'verbose_name': 'Task',
                 'verbose_name_plural': 'Tasks',
             },
             bases=(models.Model,),
-        ),
-        migrations.AddField(
-            model_name='project',
-            name='tasks',
-            field=models.ManyToManyField(related_name='project', verbose_name='Tasks', to='tasks.Task'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='project',
-            name='user',
-            field=models.ForeignKey(related_name='projects', verbose_name='User', to=settings.AUTH_USER_MODEL),
-            preserve_default=True,
         ),
     ]
