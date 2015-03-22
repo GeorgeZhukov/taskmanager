@@ -62,6 +62,15 @@ ROOT_URLCONF = 'taskmanager.urls'
 WSGI_APPLICATION = 'taskmanager.wsgi.application'
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 

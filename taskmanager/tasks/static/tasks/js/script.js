@@ -1,50 +1,41 @@
-/**
- * Created by george on 3/21/15.
- */
+var tasks = angular.module('tasks', ['ngResource']);
+
+tasks.config(function($interpolateProvider){
+    $interpolateProvider.startSymbol('<%').endSymbol('%>');
+});
+
+tasks.config(['$httpProvider', function($httpProvider){
+    // django and angular both support csrf tokens. This tells
+    // angular which cookie to add to what header.
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);
 
 
-function login(){
-    var form = $('#sign-in');
+tasks.factory('Project', ['$resource',
+  function($resource){
+    return $resource("/api/projects/:id/?format=json");
+  }]);
 
-    $.ajax({
-        method: 'POST',
-        url: '/api-auth/login/?format=json',
-        data: form.serialize(),
-        dataType: 'json',
-        success: function(data){
-            console.log(data);
-        },
-        error: function(data){
-            console.log(data);
-        }
-    });
-}
+tasks.factory('Task', ['$resource',
+  function($resource){
+    return $resource("/api/tasks/:id/?format=json");
+  }]);
 
-function logout(){
-    var logoutURL = "/api-auth/logout/";
-    $.ajax({
-        method: 'GET',
-        url: logoutURL,
-        success: function(data){
-            console.log(data);
-        }
-    });
-}
 
-function showAddProjectPopup(){
-    var addProjectURL = "/projects/add/";
-    $.ajax({
-        method: 'GET',
-        url: addProjectURL,
-        success: function(data){
-            var page = $.parseHTML(data);
-            var form = $(page).find('#add-project');
-            $('#addProjectModalBody').html(form);
-            $('#addProjectModal').modal();
-        }
-    });
-}
+tasks.controller('TodoCtrl', function($scope, Project, Task) {
+  $scope.projects = Project.query();
+  $scope.tasks = Task.query();
 
-function addProject(){
-    var project_name = $('#id_name').val();
-}
+  $scope.addProject = function () {
+    var project_name = $scope.project.name;
+    Project.save({name: project_name});
+    $('#addProjectModal').modal('hide');
+  };
+
+  $scope.deleteProject = function () {
+    
+  }
+
+});
+
