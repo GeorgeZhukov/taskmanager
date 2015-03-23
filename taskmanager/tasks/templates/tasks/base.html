@@ -27,8 +27,15 @@
 <body>
 
 <section id="page" class="container">
-    {% block page %}
-    {% endblock page %}
+    <a class="btn btn-warning pull-right" style="margin: 10px;" href="{% url 'account_logout' %}"><span
+            class="glyphicon glyphicon-log-out"></span> {% trans 'Sign Out' %}</a>
+
+    <div class="clearfix"></div>
+    <div id="projects-wrapper" class="center-block">
+        {% block page %}
+        {% endblock page %}
+    </div>
+
 </section>
 
 

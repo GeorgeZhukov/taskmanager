@@ -2,9 +2,11 @@
 {% load i18n bootstrap3 %}
 
 {% block page %}
-    <form class="form" method="post" role="form">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button class="btn btn-primary">{% trans 'Add Task' %}</button>
-    </form>
+    <div class="popup">
+        <form class="form" method="post" role="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-primary">{% trans 'Add Task' %}</button>
+        </form>
+    </div>
 {% endblock page %}

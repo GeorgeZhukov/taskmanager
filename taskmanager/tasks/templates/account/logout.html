@@ -2,7 +2,7 @@
 {% load bootstrap3 i18n %}
 
 {% block page %}
-    <div id="sign-in-wrapper">
+    <div class="popup">
         <h2>{% trans 'Sign Out' %}</h2>
 
         <form class="form" role="form" action="{% url 'account_logout' %}" method="post">
