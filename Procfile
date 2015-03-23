@@ -1,1 +1,1 @@
-web: gunicorn taskmanager.heroku_wsgi --log-file -
+web: gunicorn --pythonpath taskmanager taskmanager.heroku_wsgi --log-file -
