@@ -1,7 +1,6 @@
 html, body {
-    height: 100%;
+    min-height: 100%;
 }
-
 body {
     background: #e0e0e0; /* Old browsers */
     background: -moz-linear-gradient(top, #e0e0e0 0%, #eaf2de 0%, #d6dbc9 38%, #ffa500 63%, #ffa830 100%); /* FF3.6+ */

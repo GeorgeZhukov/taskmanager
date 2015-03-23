@@ -78,6 +78,9 @@ INSTALLED_APPS += [
 
 SITE_ID = 1
 
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = True
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

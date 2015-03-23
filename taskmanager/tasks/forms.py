@@ -14,6 +14,7 @@ class TaskForm(forms.ModelForm):
         fields = ('content', 'deadline', )
         dateTimeOptions = {
             'startDate': datetime.now().strftime("%Y-%m-%d"),
+            'initialDate': datetime.now().strftime("%Y-%m-%d")
         }
         widgets = {
             'deadline': DateTimeWidget(usel10n=True, bootstrap_version=3, options=dateTimeOptions)
