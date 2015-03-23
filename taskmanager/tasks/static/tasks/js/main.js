@@ -21,7 +21,10 @@ function goBack() {
 }
 
 function changePage(url) {
-    prev_location = url;
+    if (prev_location != current_location)
+        prev_location = current_location;
+    current_location = url;
+
     $.ajax({
         url: url,
         type: 'GET',
@@ -39,14 +42,14 @@ function bindForms() {
         event.preventDefault();
 
         $.ajax({
-            url: this.action ? this.action : prev_location,
+            url: this.action ? this.action : current_location,
             type: this.method,
             data: $(this).serialize(),
-
-            success: function (data) {
-                setPage(data);
-            },
-            error: function (data) {
+            complete: function (data) {
+                if (data.status == 400) {
+                    setPage(data.responseJSON.html);
+                    return false;
+                }
                 setPage(data);
             }
         });
@@ -56,7 +59,7 @@ function bindForms() {
 }
 function bindLinks() {
     $('a').on('click', function (event) {
-        if (this.href != '#'){
+        if (this.href != '#') {
             event.preventDefault();
             changePage(this.href);
             return false;
@@ -66,7 +69,13 @@ function bindLinks() {
 
 $(function () {
     prev_location = window.location;
+    current_location = window.location;
 
     bindLinks();
     bindForms();
+
+    history.pushState(null, null, '/');
+    window.addEventListener('popstate', function (event) {
+        history.pushState(null, null, '/');
+    });
 });

@@ -6,6 +6,7 @@
         <form class="form" method="post" role="form">
             {% csrf_token %}
             {% bootstrap_form form %}
+            <button class="btn btn-info" type="button" onclick="goBack();">{% trans 'Go Back' %}</button>
             <button class="btn btn-primary">{% trans 'Add Project' %}</button>
         </form>
     </div>

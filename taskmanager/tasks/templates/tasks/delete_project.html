@@ -6,6 +6,7 @@
         <form class="form" method="post" role="form">
             {% csrf_token %}
             <p class="lead">{% blocktrans %}Are you sure want delete this project?{% endblocktrans %}</p>
+            <button class="btn btn-info" type="button" onclick="goBack();">{% trans 'Go Back' %}</button>
             <button class="btn btn-danger">{% trans 'Delete Project' %}</button>
         </form>
     </div>
