@@ -23,7 +23,7 @@ class Project(models.Model):
 class Task(models.Model):
     project = models.ForeignKey(Project, related_name='tasks', verbose_name=_('Project'))
     content = models.CharField(max_length=50, verbose_name=_('Task content'))
-    deadline = models.DateTimeField(verbose_name=_('Deadline'))
+    deadline = models.DateTimeField(null=True, verbose_name=_('Deadline'))
 
     def __str__(self):
         return self.content

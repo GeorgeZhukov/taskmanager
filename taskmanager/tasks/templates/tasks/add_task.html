@@ -3,6 +3,7 @@
 
 {% block page %}
     <div class="popup">
+        {{ form.media }}
         <form class="form" method="post" role="form">
             {% csrf_token %}
             {% bootstrap_form form %}

@@ -134,7 +134,7 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0); /* IE6-9 */
 
     width: 460px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 40px;
     border-radius: 10px;
     -webkit-box-shadow:  0px 1px 2px #464646;

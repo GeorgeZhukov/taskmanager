@@ -15,7 +15,7 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    {{ form.media }}
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,8 +27,10 @@
 <body>
 
 <section id="page" class="container">
-    <a class="btn btn-warning pull-right" style="margin: 10px;" href="{% url 'account_logout' %}"><span
-            class="glyphicon glyphicon-log-out"></span> {% trans 'Sign Out' %}</a>
+    {% if user.is_authenticated %}
+        <a class="btn btn-warning pull-right" style="margin: 10px;" href="{% url 'account_logout' %}"><span
+                class="glyphicon glyphicon-log-out"></span> {% trans 'Sign Out' %}</a>
+    {% endif %}
 
     <div class="clearfix"></div>
     <div id="projects-wrapper" class="center-block">
@@ -43,8 +45,10 @@
     {% trans '2015 © George Zhukov' %}
 </footer>
 
+<script type="text/javascript">
+    is_auth = '{{ request.user.is_authenticated }}';
+</script>
 <script src="{% static 'tasks/js/main.js' %}"></script>
 {% bootstrap_javascript %}
-
 </body>
 </html>
