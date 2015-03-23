@@ -11,6 +11,7 @@
             {% if redirect_field_value %}
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
             {% endif %}
+            <button class="btn btn-info" type="button" onclick="goBack();">{% trans 'Go Back' %}</button>
             <button class="btn btn-success center-block"><span
                     class="glyphicon glyphicon-ok"></span> {% trans 'Sign Up' %}
             </button>
