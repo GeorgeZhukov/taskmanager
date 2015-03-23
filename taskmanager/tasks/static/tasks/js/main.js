@@ -20,6 +20,21 @@ function goBack() {
     changePage(prev_location);
 }
 
+function changeTaskStatus(task_id) {
+    $('.task-' + task_id).toggleClass('task-done');
+
+    $.ajax({
+        url: '/task/' + task_id + '/toggle/',
+        type: 'GET',
+        error: function (data) {
+            // revert
+            $('.task-' + task_id).toggleClass('task-done');
+        }
+    });
+
+    // request
+}
+
 function changePage(url) {
     if (prev_location != current_location)
         prev_location = current_location;

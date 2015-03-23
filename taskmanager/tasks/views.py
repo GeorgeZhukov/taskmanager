@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 
@@ -9,6 +9,18 @@ from .models import Project, Task
 from .forms import TaskForm
 
 # Create your views here.
+
+
+class ToggleTaskStatus(LoginRequiredMixin, generic.TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        try:
+            task = Task.objects.get(pk=self.kwargs['task_pk'], project__user=self.request.user)
+        except Task.DoesNotExist:
+            raise Http404
+        task.done = not task.done
+        task.save()
+        return HttpResponse('changed')
 
 
 class ProjectsView(LoginRequiredMixin, generic.ListView):

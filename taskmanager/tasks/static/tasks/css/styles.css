@@ -110,6 +110,13 @@ body {
 .task:hover {
     background-color: #fffeef;
 }
+.task .task-today {
+    color: #f00;
+}
+.task-done .task-content {
+    text-decoration: line-through;
+    color: #afafaf;
+}
 
 .task:hover .task-actions {
     display: inline;

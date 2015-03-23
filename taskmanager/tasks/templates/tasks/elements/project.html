@@ -30,11 +30,13 @@
         <table class="table">
             <tbody>
             {% for task in project.tasks.all %}
-                <tr class="task">
+                <tr class="task task-{{ task.pk }} {% if task.done %}task-done{% endif %}">
                     <td>
-                        <input type="checkbox"/>
+                        <input type="checkbox" {% if task.done %}checked{% endif %} onclick="changeTaskStatus({{task.pk}});"/>
                     </td>
-                    <td>{{ task.content | truncatewords:10 }}</td>
+                    <td class="task-content {% if task.is_deadline_today %}task-today{% endif %}">
+                        {{ task.content | truncatewords:10 }}
+                    </td>
                     <td class="task-actions-cell">
                         <div class="task-actions">
                             <a href="#"><span class="glyphicon glyphicon-sort"></span></a>

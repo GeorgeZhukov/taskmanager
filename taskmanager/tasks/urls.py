@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 from .views import ProjectsView, AddProjectView, DeleteProjectView, UpdateProjectView, AddTaskView, UpdateTaskView, \
-    DeleteTaskView
+    DeleteTaskView, ToggleTaskStatus
 
 urlpatterns = patterns('',
     url(r'^$', ProjectsView.as_view(), name='projects-view'),
@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^(?P<project_pk>\d+)/task/add/$', AddTaskView.as_view(), name='add-task'),
     url(r'^(?P<project_pk>\d+)/task/(?P<task_pk>\d+)/update/$', UpdateTaskView.as_view(), name='update-task'),
     url(r'^(?P<project_pk>\d+)/task/(?P<task_pk>\d+)/delete/$', DeleteTaskView.as_view(), name='delete-task'),
+    url(r'^task/(?P<task_pk>\d+)/toggle/$', ToggleTaskStatus.as_view()),
 )
