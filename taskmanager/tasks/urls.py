@@ -1,46 +1,14 @@
 from django.conf.urls import patterns, include, url
 
-from .views import HomeView
-from .models import Project, Task
-from rest_framework import routers, serializers, viewsets
-
-# Serializers define the API representation.
-
-
-class ProjectSerializer(serializers.HyperlinkedModelSerializer):
-    
-
-    class Meta:
-        model = Project
-        fields = ('name', )
-
-
-class TaskSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Task
-        fields = ('project', 'content', 'deadline', )
-
-
-# ViewSets define the view behavior.
-class ProjectViewSet(viewsets.ModelViewSet):
-    serializer_class = ProjectSerializer
-
-    def get_queryset(self):
-        return Project.objects.filter()
-
-
-class TaskViewSet(viewsets.ModelViewSet):
-    serializer_class = TaskSerializer
-
-    def get_queryset(self):
-        return Task.objects.filter(project__user=self.request.user)
-
-# Routers provide an easy way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-router.register(r'projects', ProjectViewSet, 'Projects')
-router.register(r'tasks', TaskViewSet, 'Tasks')
+from .views import ProjectsView, AddProjectView, DeleteProjectView, UpdateProjectView, AddTaskView, UpdateTaskView, \
+    DeleteTaskView
 
 urlpatterns = patterns('',
-    url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^api/', include(router.urls)),
+    url(r'^$', ProjectsView.as_view(), name='projects-view'),
+    url(r'^add/$', AddProjectView.as_view(), name='add-project'),
+    url(r'^(?P<project_pk>\d+)/delete/$', DeleteProjectView.as_view(), name='delete-project'),
+    url(r'^(?P<project_pk>\d+)/update/$', UpdateProjectView.as_view(), name='update-project'),
+    url(r'^(?P<project_pk>\d+)/task/add/$', AddTaskView.as_view(), name='add-task'),
+    url(r'^(?P<project_pk>\d+)/task/(?P<task_pk>\d+)/update/$', UpdateTaskView.as_view(), name='update-task'),
+    url(r'^(?P<project_pk>\d+)/task/(?P<task_pk>\d+)/delete/$', DeleteTaskView.as_view(), name='delete-task'),
 )

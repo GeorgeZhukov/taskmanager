@@ -1,21 +1,20 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Project
+from datetimewidget.widgets import DateTimeWidget
+
+from datetime import datetime
+
+from .models import Project, Task
 
 
-class SignupForm(forms.Form):
-    username = forms.CharField(max_length=30, label=_('Username'))
-    password = forms.CharField(max_length=30, widget=forms.PasswordInput, label=_('Password'))
-    confirm = forms.CharField(max_length=30, widget=forms.PasswordInput, label=_('Password Confirm'))
-
-
-class SigninForm(forms.Form):
-    username = forms.CharField(max_length=30, label=_('Username'))
-    password = forms.CharField(max_length=30, widget=forms.PasswordInput, label=_('Password'))
-
-
-class AddProjectForm(forms.ModelForm):
+class TaskForm(forms.ModelForm):
     class Meta:
-        model = Project
-        fields = ['name', ]
+        model = Task
+        fields = ('content', 'deadline', )
+        dateTimeOptions = {
+            'startDate': datetime.now().strftime("%Y-%m-%d"),
+        }
+        widgets = {
+            'deadline': DateTimeWidget(usel10n=True, bootstrap_version=3, options=dateTimeOptions)
+        }

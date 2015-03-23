@@ -1,41 +1,52 @@
 {% load i18n %}
 <div class="project">
 
-    <div class="header">
+    <div class="project-header">
         <div class="row">
-            <div class="col-md-8">
-                <span class="glyphicon glyphicon-calendar"></span>{{ project.name }}Header
-            </div>
-            <div class="col-md-4">
-                <div class="pull-right">
-                    <button class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span></button>
-                    <button class="btn btn-link"><span class="glyphicon glyphicon-trash"></span></button>
-                </div>
+            <span class="glyphicon glyphicon-calendar"></span>{{ project.name }}
+            <div class="project-actions pull-right">
+                <a href="{% url 'tasks:update-project' project.pk %}"><span
+                        class="glyphicon glyphicon-pencil"></span></a>
+                <a href="{% url 'tasks:delete-project' project.pk %}"><span
+                        class="glyphicon glyphicon-trash"></span></a>
             </div>
         </div>
     </div>
     <div class="new-task">
         <div class="input-group">
             <span class="input-group-btn">
-                <button class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
+                <a class="btn btn-success btn-sm" href="{% url 'tasks:add-task' project.pk %}"><span
+                        class="glyphicon glyphicon-plus"></span></a>
             </span>
-            <input type="text" class="form-control" id="new-task-name"
+            <input type="text" class="form-control input-sm" id="new-task-name-{{ project.pk }}"
                    placeholder="{% trans 'Start typing here to create a task' %}">
             <span class="input-group-btn">
-                <button class="btn btn-success">{% trans 'Add task' %}</button>
+                <a class="btn btn-success btn-sm"
+                   href="{% url 'tasks:add-task' project.pk %}">{% trans 'Add task' %}</a>
             </span>
         </div>
     </div>
-    <div class="body">
-        <table class="table table-bordered">
+    <div class="project-body">
+        <table class="table">
             <tbody>
-            <tr>
-                <td>
-                    <input type="checkbox"/>
-                </td>
-                <td>Lorem ipsum dolor.</td>
-                <td></td>
-            </tr>
+            {% for task in project.tasks.all %}
+                <tr class="task">
+                    <td>
+                        <input type="checkbox"/>
+                    </td>
+                    <td>{{ task.content | truncatewords:10 }}</td>
+                    <td class="task-actions-cell">
+                        <div class="task-actions">
+                            <a href="#"><span class="glyphicon glyphicon-sort"></span></a>
+                            <a href="{% url 'tasks:update-task' project.pk task.pk %}"><span
+                                    class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="{% url 'tasks:delete-task' project.pk task.pk %}"><span
+                                    class="glyphicon glyphicon-trash"></span></a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
             </tbody>
         </table>
     </div>

@@ -1,0 +1,10 @@
+{% extends 'tasks/base.html' %}
+{% load i18n bootstrap3 %}
+
+{% block page %}
+    <form class="form" method="post" role="form">
+        {% csrf_token %}
+        <p class="lead">{% blocktrans %}Are you sure want delete this task?{% endblocktrans %}</p>
+        <button class="btn btn-danger">{% trans 'Delete Task' %}</button>
+    </form>
+{% endblock page %}

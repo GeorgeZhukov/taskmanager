@@ -1,49 +1,5 @@
 {% extends 'tasks/base.html' %}
 
 {% block page %}
-    <div ng-controller="TodoCtrl">
-    	<div class="projects">
-    		<div class="project" ng-repeat="project in projects">
-    			<% project.name %>
 
-    			<div class="tasks">
-    				<div class="task" ng-repeat="task in tasks">
-    					<% task.content %>
-    				</div>
-    			</div>
-    			<!-- /tasks -->
-    		</div>
-    		<!-- /project -->
-
-    		<!-- Modal -->
-			<div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			    	<form class="form" ng-submit="addProject()">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="addProjectLabel">Add Project</h4>
-			      </div>
-			      <div class="modal-body">
-			      	
-			      		<div class="form-group">
-					    	<label for="projectName">Project name</label>
-					    	<input type="text" class="form-control" id="projectName" placeholder="Enter project name" ng-model="project.name">
-					  	</div>
-			      	
-			        
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="submit" class="btn btn-primary" >Add Project</button>
-			      </div>
-			      </form>
-			    </div>
-			  </div>
-			</div>
-
-    		<button class="btn btn-primary" data-toggle="modal" data-target="#addProjectModal">Add Project</button>
-    	</div>
-    	<!-- /projects -->
-    </div>
 {% endblock page %}

@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 @python_2_unicode_compatible
 class Project(models.Model):
-    name = models.CharField(max_length=30, verbose_name=_('Project name'))
+    name = models.CharField(max_length=50, verbose_name=_('Project name'))
     user = models.ForeignKey(User, null=True, related_name='projects', verbose_name=_('User'))
 
     def __str__(self):
@@ -22,7 +22,7 @@ class Project(models.Model):
 @python_2_unicode_compatible
 class Task(models.Model):
     project = models.ForeignKey(Project, related_name='tasks', verbose_name=_('Project'))
-    content = models.TextField(verbose_name=_('Task content'))
+    content = models.CharField(max_length=50, verbose_name=_('Task content'))
     deadline = models.DateTimeField(verbose_name=_('Deadline'))
 
     def __str__(self):

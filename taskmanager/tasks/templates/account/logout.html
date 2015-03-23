@@ -1,0 +1,17 @@
+{% extends "tasks/base.html" %}
+{% load bootstrap3 i18n %}
+
+{% block page %}
+    <div id="sign-in-wrapper">
+        <h2>{% trans 'Sign Out' %}</h2>
+
+        <form class="form" role="form" action="{% url 'account_logout' %}" method="post">
+            {% csrf_token %}
+            <p class="lead">{% blocktrans %}Are you sure want sign out?{% endblocktrans %}</p>
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <button class="btn btn-danger">{% trans 'Sign Out' %}</button>
+        </form>
+    </div>
+{% endblock page %}

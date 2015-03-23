@@ -1,16 +1,25 @@
 html, body {
     height: 100%;
 }
+
 body {
-    background-color: #464646;
+    background: #e0e0e0; /* Old browsers */
+    background: -moz-linear-gradient(top, #e0e0e0 0%, #eaf2de 0%, #d6dbc9 38%, #ffa500 63%, #ffa830 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e0e0e0), color-stop(0%, #eaf2de), color-stop(38%, #d6dbc9), color-stop(63%, #ffa500), color-stop(100%, #ffa830)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #e0e0e0 0%, #eaf2de 0%, #d6dbc9 38%, #ffa500 63%, #ffa830 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #e0e0e0 0%, #eaf2de 0%, #d6dbc9 38%, #ffa500 63%, #ffa830 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #e0e0e0 0%, #eaf2de 0%, #d6dbc9 38%, #ffa500 63%, #ffa830 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #e0e0e0 0%, #eaf2de 0%, #d6dbc9 38%, #ffa500 63%, #ffa830 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0e0e0', endColorstr='#ffa830', GradientType=0); /* IE6-9 */
 }
+
 #page {
-    height: 90%;
+    padding-bottom: 100px;
 }
+
 #projects-wrapper {
     width: 600px;
 }
-
 
 #sign-in-wrapper {
     margin: 60px auto;
@@ -22,31 +31,93 @@ body {
 }
 
 .project {
-    margin-top: 20px;
+    margin-top: 40px;
     background: #ffffff;
     min-height: 160px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    /*border: 1px solid #646464;*/
+    -webkit-box-shadow: 0 1px 2px #646464;
+    -moz-box-shadow: 0 1px 2px #646464;
+    box-shadow: 0 1px 2px #646464;
 }
-.project .header {
+
+.project-header {
+    background: #2aa3e0; /* Old browsers */
+    background: -moz-linear-gradient(top, #2aa3e0 0%, #1281bc 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2aa3e0), color-stop(100%, #1281bc)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #2aa3e0 0%, #1281bc 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #2aa3e0 0%, #1281bc 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #2aa3e0 0%, #1281bc 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #2aa3e0 0%, #1281bc 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2aa3e0', endColorstr='#1281bc', GradientType=0); /* IE6-9 */
     color: #fafafa;
-    background-color: #599fcf;
-    font-size: 18px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 6px;
+    height: 40px;
+    font-size: 16px;
+    padding: 10px 30px;
+    cursor: pointer;
 }
-.project .header span {
+
+.project-header span {
     color: #464646;
     margin: 0 6px;
 }
-.project .new-task {
-    padding: 4px 10px;
+
+.project-actions {
+    display: none;
+    font-size: 14px;
+}
+
+.project-header:hover .project-actions {
+    display: inline;
+}
+
+.project-actions a span {
+    color: #d7d7d7 !important;
+}
+
+.new-task {
+    background: #e0e0e0; /* Old browsers */
+    background: -moz-linear-gradient(top, #e0e0e0 0%, #a5a5a5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e0e0e0), color-stop(100%, #a5a5a5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #e0e0e0 0%, #a5a5a5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #e0e0e0 0%, #a5a5a5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #e0e0e0 0%, #a5a5a5 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #e0e0e0 0%, #a5a5a5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0e0e0', endColorstr='#a5a5a5', GradientType=0); /* IE6-9 */
+
+    padding: 6px 10px;
     background-color: #868686;
 }
 
 #footer {
     color: #ececec;
-    background-color: #242424;
     padding: 20px 0;
+}
+
+.task-actions-cell {
+    width: 80px;
+}
+
+.task-actions {
+    display: none;
+}
+.task {
+    cursor: pointer;
+}
+
+.task:hover {
+    background-color: #fffeef;
+}
+
+.task:hover .task-actions {
+    display: inline;
+}
+
+.task td:first-child {
+    width: 40px;
+}
+
+.project-body {
+    color: #868686;
 }

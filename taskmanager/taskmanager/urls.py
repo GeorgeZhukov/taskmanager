@@ -4,6 +4,6 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'^', include('tasks.urls', namespace='tasks')),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    (r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

@@ -2,22 +2,18 @@
 {% load i18n %}
 
 {% block page %}
-    {% if user.is_authenticated %}
-        <button class="btn btn-warning" onclick="logout();">{% trans 'Logout' %}</button>
-        <div id="projects-wrapper" class="center-block">
 
-            {% for project in view.get_projects %}
-                {% include 'tasks/elements/project.html' %}
-            {% empty %}
-                <p class="lead">{% trans 'No projects' %}</p>
-            {% endfor %}
+    <a class="btn btn-warning pull-right" style="margin: 10px;" href="{% url 'account_logout' %}"><span class="glyphicon glyphicon-log-out"></span> {% trans 'Sign Out' %}</a>
+    <div class="clearfix"></div>
+    <div id="projects-wrapper" class="center-block">
 
-            <button class="btn btn-primary center-block" data-toggle="modal" data-target="#addProjectModal"><span
-                    class="glyphicon glyphicon-plus"></span> {% trans 'Add project' %}</button>
-            {% include 'tasks/elements/add-project.html' %}
-        </div>
-    {% else %}
-        {% include 'tasks/elements/signin.html' %}
-        {% include 'tasks/elements/signup.html' %}
-    {% endif %}
+        {% for project in projects %}
+            {% include 'tasks/elements/project.html' %}
+        {% empty %}
+            <p class="lead text-center">{% trans 'No projects' %}</p>
+        {% endfor %}
+
+        <a class="btn btn-primary btn-lg center-block" style="width: 160px;" href="{% url 'tasks:add-project' %}"><span
+                    class="glyphicon glyphicon-plus"></span> {% trans 'Add Project' %}</a>
+    </div>
 {% endblock page %}
