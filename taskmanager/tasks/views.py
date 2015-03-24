@@ -3,12 +3,44 @@ from django.http import Http404, HttpResponse
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 
+from rest_framework import serializers, viewsets
 from braces.views import LoginRequiredMixin
 
 from .models import Project, Task
 from .forms import TaskForm
 
 # Create your views here.
+
+
+# Serializers define the API representation.
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ('id', 'project', 'content', 'deadline', 'done', )
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    tasks = TaskSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Project
+        fields = ('id', 'user', 'name', 'tasks', )
+
+
+# ViewSets define the view behavior.
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+    def create(self, request, *args, **kwargs):
+        result = super(ProjectViewSet, self).create(request, *args, **kwargs)
+        result.user = request.user
+        return result
 
 
 class ToggleTaskStatus(LoginRequiredMixin, generic.TemplateView):
@@ -111,3 +143,7 @@ class DeleteTaskView(LoginRequiredMixin, generic.DeleteView):
         except Task.DoesNotExist:
             raise Http404
         return task
+
+
+class AngularView(generic.TemplateView):
+    template_name = 'tasks/angular.html'

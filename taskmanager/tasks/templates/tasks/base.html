@@ -1,7 +1,7 @@
 {% load i18n bootstrap3 staticfiles %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}" ng-app="tasks">
+<html lang="{{ LANGUAGE_CODE }}" ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,7 @@
     <!-- Bootstrap -->
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'tasks/css/styles.css' %}"/>
+    <link href="{% static 'tasks/css/toaster.min.css' %}" rel="stylesheet" />
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -48,7 +49,12 @@
 <script type="text/javascript">
     is_auth = '{{ request.user.is_authenticated }}';
 </script>
-<script src="{% static 'tasks/js/main.js' %}"></script>
+<script src="{% static 'tasks/js/angular.min.js' %}"></script>
+<script src="{% static 'tasks/js/angular-resource.min.js' %}"></script>
+<script src="{% static 'tasks/js/angular-animate.min.js' %}"></script>
+<script src="{% static 'tasks/js/toaster.min.js' %}"></script>
+<script src="{% static 'tasks/js/app.js' %}"></script>
+{#<script src="{% static 'tasks/js/main.js' %}"></script>#}
 {% bootstrap_javascript %}
 </body>
 </html>

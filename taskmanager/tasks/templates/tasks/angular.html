@@ -1,0 +1,89 @@
+{% extends 'tasks/base.html' %}
+{% load i18n %}
+
+{% block page %}
+    <toaster-container></toaster-container>
+
+    <h2 class="text-uppercase text-center">{% trans 'Simple todo list' %}</h2>
+    <div ng-controller="ProjectsController" ng-cloak>
+
+        <div class="projects" ng-repeat="project in projects">
+            <div class="project" ng-controller="TasksController">
+                    <div class="project-header">
+                        <div class="row">
+                            <span class="glyphicon glyphicon-calendar"></span><% project.name %>
+                            <div class="project-actions pull-right">
+                                <a href="#"><span
+                                        class="glyphicon glyphicon-pencil"></span></a>
+                                <a ng-click="deleteProject(project);" href="#"><span
+                                        class="glyphicon glyphicon-trash"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-task">
+                        <div class="input-group">
+                            <span class="input-group-btn" ng-click="addTask(project);">
+                                <a class="btn btn-success btn-sm" href="#"><span
+                                        class="glyphicon glyphicon-plus"></span></a>
+                            </span>
+                            <input type="text" ng-model="task.content" class="form-control input-sm" id="new-task-name-<%project.id%>"
+                                   placeholder="{% trans 'Start typing here to create a task' %}">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success btn-sm" ng-click="addTask(project);">{% trans 'Add task' %}</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <table class="table">
+                            <tbody ng-repeat="task in project.tasks">
+                                <tr class="task task-<%task.id%>">
+                                    <td>
+                                        <input type="checkbox" ng-checked="task.done"/>
+                                    </td>
+                                    <td class="task-content">
+                                        <%task.content%>
+                                    </td>
+                                    <td class="task-actions-cell">
+                                        <div class="task-actions">
+                                            <a href="#"><span class="glyphicon glyphicon-sort"></span></a>
+                                            <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+                                            <a href="#" ng-click="deleteTask(task);"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+        </div>
+
+
+
+
+        <a class="btn btn-primary btn-lg center-block" style="width: 160px;" data-toggle="modal" data-target="#newProjectModal"><span
+            class="glyphicon glyphicon-plus"></span> {% trans 'Add Project' %}</a>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{% trans 'New Project' %}</h4>
+              </div>
+              <div class="modal-body">
+                <input class="form-control" type="text" ng-model="project.name"/>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
+                <button type="button" class="btn btn-primary" ng-click="addProject();" data-dismiss="modal">{% trans 'Add Project' %}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+{% endblock page %}
