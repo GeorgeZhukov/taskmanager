@@ -5,10 +5,10 @@
     <toaster-container></toaster-container>
 
     <h2 class="text-uppercase text-center">{% trans 'Simple todo list' %}</h2>
-    <div ng-controller="ProjectsListController" ng-cloak>
+    <div ng-controller="ProjectsListCtrl" ng-cloak>
 
         <div class="projects" ng-repeat="project in projects">
-            <div class="project" ng-controller="ProjectController" ng-model="project">
+            <div class="project" ng-controller="ProjectCtrl" ng-model="project">
                     <div class="project-header">
                         <div class="row">
                             <span class="glyphicon glyphicon-calendar"></span><% project.name %>
@@ -21,15 +21,15 @@
                         </div>
                     </div>
                     <div class="new-task">
-                        <form class="form">
+                        <form class="form" ng-submit="addTask(project);">
                             <div class="input-group">
-                                <span class="input-group-btn" ng-click="addTask(project);">
-                                    <a class="btn btn-success btn-sm" href="#"><span
-                                            class="glyphicon glyphicon-plus"></span></a>
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-success btn-sm" ><span
+                                            class="glyphicon glyphicon-plus"></span></button>
                                 </span>
                                 <input type="text" required ng-model="task.content" class="form-control input-sm" placeholder="{% trans 'Start typing here to create a task' %}">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success btn-sm" ng-click="addTask(project);">{% trans 'Add task' %}</button>
+                                    <button type="submit" class="btn btn-success btn-sm" >{% trans 'Add task' %}</button>
                                 </span>
                             </div>
                         </form>

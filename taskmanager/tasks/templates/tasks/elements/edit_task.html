@@ -1,8 +1,8 @@
 {% load i18n %}
 <!-- Modal -->
-<div class="modal fade" ng-controller="EditTaskController" ng-model="task" id="EditTaskModal" tabindex="-1" role="dialog" aria-labelledby="EditTaskModalLabel" aria-hidden="true">
+<div class="modal fade" ng-controller="EditTaskCtrl" ng-model="task" id="EditTaskModal" tabindex="-1" role="dialog" aria-labelledby="EditTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form name="{{ task_form.form_name }}" novalidate>
+        <form name="{{ task_form.form_name }}" ng-submit="save();" class="form" novalidate>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
-                    <button type="button" class="btn btn-primary" ng-click="save();" ng-disabled="{{ task_form.form_name }}.$invalid">{% trans 'Save changes' %}</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="{{ task_form.form_name }}.$invalid">{% trans 'Save changes' %}</button>
                 </div>
             </div>
         </form>

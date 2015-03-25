@@ -78,7 +78,7 @@ app.factory("task", function (Restangular) {
     return Restangular.all('tasks');
 });
 
-app.controller('EditTaskController', function ($scope, task, notification) {
+app.controller('EditTaskCtrl', function ($scope, task, notification) {
     $scope.$on('editTask', function (event, args) {
         $scope.task = args;
         $scope.content = $scope.task.content;
@@ -102,7 +102,7 @@ app.controller('EditTaskController', function ($scope, task, notification) {
     }
 });
 
-app.controller('AddProjectController', function($scope, project, notification){
+app.controller('AddProjectCtrl', function($scope, project, notification){
     $scope.save = function() {
         var projectInstance = {name: $scope.name};
         project.post(projectInstance).then(function(){
@@ -112,7 +112,7 @@ app.controller('AddProjectController', function($scope, project, notification){
     };
 });
 
-app.controller('ProjectsListController', function ($scope, project, notification) {
+app.controller('ProjectsListCtrl', function ($scope, project, notification) {
 
     $scope.update = function () {
         project.getList().then(function (projects) {
@@ -133,7 +133,7 @@ app.controller('ProjectsListController', function ($scope, project, notification
 
 
 
-app.controller('EditProjectController', function ($scope, project, notification) {
+app.controller('EditProjectCtrl', function ($scope, project, notification) {
     $scope.$on('editProject', function (event, args) {
         $scope.project = args;
         $scope.name = $scope.project.name;
@@ -155,7 +155,8 @@ app.controller('EditProjectController', function ($scope, project, notification)
     }
 });
 
-app.controller('ProjectController', function ($scope, $rootScope, project, task, notification) {
+app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notification) {
+
     $scope.updateProject = function () {
         // todo: optimize
         project.getList().then(function (projects) {
