@@ -29,5 +29,5 @@ Run server...
 
 
 # TODO
-- ~~ Add js framework like AngularJS, Backbone, or something else...~~
+- ~~Add js framework like AngularJS, Backbone, or something else...~~
 - Add unit tests
