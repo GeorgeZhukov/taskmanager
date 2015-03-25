@@ -22,3 +22,35 @@ class TestModels(TestCase):
 
     def test_project_str(self):
         self.assertEqual(self.project.__str__(), 'Project #1')
+
+
+class TestAngularView(TestCase):
+	def setUp(self):
+		self.user = create_test_user()
+		self.client.login(username='User', password='password')
+
+	def test_page_accessible(self):
+		response = self.client.get('/')
+		self.assertEqual(response.status_code, 200)
+
+
+class TestAPI(TestCase):
+	def setUp(self):
+		self.user = create_test_user()
+		self.client.login(username='User', password='password')
+
+	def test_task_view(self):
+		response = self.client.get('/api/tasks/')
+		self.assertEqual(response.status_code, 200)
+
+
+	def test_unauthorized(self):
+		self.client.logout()
+		response = self.client.get('/api/projects/')
+		self.assertEqual(response.status_code, 403)
+
+	# def test_create_project_assign_user(self):
+	# 	response = self.client.post('/api/projects/', {'name': 'Project 1'})
+	# 	project = Project.objects.first()
+	# 	print project.user
+	# 	self.assertEqual(project.user, self.user)
