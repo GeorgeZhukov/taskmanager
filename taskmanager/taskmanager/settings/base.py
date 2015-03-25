@@ -109,6 +109,9 @@ DATABASES = {
 }
 
 
+
+
+
 from django.core.urlresolvers import reverse_lazy
 LOGIN_REDIRECT_URL = reverse_lazy('tasks:projects-view')
 
@@ -124,18 +127,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-REST_FRAMEWORK = {
-    # Use hyperlinked styles by default.
-    # Only used if the `serializer_class` attribute is not set on a view.
-    'DEFAULT_MODEL_SERIALIZER_CLASS': 'rest_framework.serializers.HyperlinkedModelSerializer',
-
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

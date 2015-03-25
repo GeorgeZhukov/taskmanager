@@ -4,10 +4,15 @@ from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 
 from rest_framework import serializers, viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
 from braces.views import LoginRequiredMixin
 
 from .models import Project, Task
-from .forms import TaskForm
+from .forms import TaskForm, LoginForm
 
 # Create your views here.
 
@@ -29,11 +34,13 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 # ViewSets define the view behavior.
 class TaskViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
@@ -41,6 +48,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
         result = super(ProjectViewSet, self).create(request, *args, **kwargs)
         result.user = request.user
         return result
+
+
+class LoginView(APIView):
+    def post(self, request, format=None):
+        form = LoginForm(request.DATA, commit=False)
+        isq = form.is_valid()
+        i = 5
 
 
 class ToggleTaskStatus(LoginRequiredMixin, generic.TemplateView):
