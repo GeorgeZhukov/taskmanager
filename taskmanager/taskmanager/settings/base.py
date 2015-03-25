@@ -63,9 +63,9 @@ INSTALLED_APPS = [
 
     # third party apps
     'bootstrap3',
-    'braces',
     'datetimewidget',
     'rest_framework',
+    'djangular',
 
     # project apps
     'tasks',
@@ -108,12 +108,6 @@ DATABASES = {
     }
 }
 
-
-
-
-
-from django.core.urlresolvers import reverse_lazy
-LOGIN_REDIRECT_URL = reverse_lazy('tasks:projects-view')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
