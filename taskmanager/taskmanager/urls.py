@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^', include('tasks.urls', namespace='tasks')),
     (r'^accounts/', include('allauth.urls')),
     url(r'^api/', include(router.urls)),
+    # url(r'^djangular/', include('djangular.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
 )

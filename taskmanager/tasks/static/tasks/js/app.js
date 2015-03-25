@@ -44,7 +44,7 @@ app.config(function ($interpolateProvider, $httpProvider, RestangularProvider) {
                 if (rejection.status == 403) {
                     // auth problem
                     notification.showLoggedOut();
-                    $('#AuthModal').modal('show');
+                    document.location.href = '/accounts/login/';
                 }
                 return $q.reject(rejection);
             }
@@ -81,21 +81,35 @@ app.factory("task", function (Restangular) {
 app.controller('EditTaskController', function ($scope, task, notification) {
     $scope.$on('editTask', function (event, args) {
         $scope.task = args;
+        $scope.content = $scope.task.content;
+        $scope.deadline = $scope.task.deadline;
         $('#EditTaskModal').modal('show');
     });
     $scope.save = function () {
+        $scope.task.content = $scope.content;
+        $scope.task.deadline = $scope.deadline;
         //todo: optimize
         task.getList().then(function (tasks) {
             var theTask = _.find(tasks, function (task) {
                 return task.id === $scope.task.id;
             });
-            theTask.content = $scope.task.content;
-            theTask.deadline = $scope.task.deadline;
+            theTask.content = $scope.content;
+            theTask.deadline = $scope.deadline;
             theTask.put();
             $('#EditTaskModal').modal('hide');
             notification.showTaskSaved();
         });
     }
+});
+
+app.controller('AddProjectController', function($scope, project, notification){
+    $scope.save = function() {
+        var projectInstance = {name: $scope.name};
+        project.post(projectInstance).then(function(){
+            $scope.update();
+            $('#newProjectModal').modal('hide');
+        });
+    };
 });
 
 app.controller('ProjectsListController', function ($scope, project, notification) {
@@ -117,12 +131,16 @@ app.controller('ProjectsListController', function ($scope, project, notification
     $scope.update();
 });
 
+
+
 app.controller('EditProjectController', function ($scope, project, notification) {
     $scope.$on('editProject', function (event, args) {
         $scope.project = args;
+        $scope.name = $scope.project.name;
         $('#EditProjectModal').modal('show');
     });
     $scope.save = function () {
+        $scope.project.name = $scope.name;
         //todo: optimize
         project.getList().then(function (projects) {
             var theProject = _.find(projects, function (project) {

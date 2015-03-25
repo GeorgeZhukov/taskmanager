@@ -25,11 +25,10 @@ class Project(models.Model):
 class Task(models.Model):
     project = models.ForeignKey(Project, related_name='tasks', verbose_name=_('Project'))
     content = models.CharField(max_length=50, verbose_name=_('Task content'))
-    deadline = models.DateTimeField(null=True, verbose_name=_('Deadline'))
+    deadline = models.DateTimeField(blank=True, null=True, verbose_name=_('Deadline'))
     done = models.BooleanField(default=False, verbose_name=_('Is done?'))
 
     def is_deadline_today(self):
-
         return date.today() == self.deadline.date()
 
     def __str__(self):

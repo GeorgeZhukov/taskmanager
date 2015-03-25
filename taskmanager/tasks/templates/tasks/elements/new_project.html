@@ -1,0 +1,21 @@
+{% load i18n %}
+<!-- Modal -->
+<div class="modal fade" ng-controller="AddProjectController" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form name="{{ add_project_form.form_name }}" class="form" novalidate>
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">{% trans 'New Project' %}</h4>
+          </div>
+          <div class="modal-body">
+            {{ add_project_form }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
+            <button type="button" class="btn btn-primary" ng-click="save();" ng-disabled="{{ add_project_form.form_name }}.$invalid">{% trans 'Add Project' %}</button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>

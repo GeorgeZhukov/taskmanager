@@ -1,0 +1,19 @@
+<table class="table">
+    <tbody ng-repeat="task in project.tasks">
+        <tr class="task" ng-class="{'task-done': task.done}">
+            <td>
+                <input type="checkbox" ng-click="toggleTaskStatus(task);" ng-checked="task.done"/>
+            </td>
+            <td class="task-content">
+                <%task.content%>
+            </td>
+            <td class="task-actions-cell">
+                <div class="task-actions">
+                    <a href="#"><span class="glyphicon glyphicon-sort"></span></a>
+                    <a href="#" ng-click="editTask(task);"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="#" ng-click="deleteTask(task);"><span class="glyphicon glyphicon-trash"></span></a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

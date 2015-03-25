@@ -1,5 +1,5 @@
 {% extends 'tasks/base.html' %}
-{% load i18n %}
+{% load i18n bootstrap3 %}
 
 {% block page %}
     <toaster-container></toaster-container>
@@ -35,25 +35,7 @@
                         </form>
                     </div>
                     <div class="project-body">
-                        <table class="table">
-                            <tbody ng-repeat="task in project.tasks">
-                                <tr class="task" ng-class="{'task-done': task.done}">
-                                    <td>
-                                        <input type="checkbox" ng-click="toggleTaskStatus(task);" ng-checked="task.done"/>
-                                    </td>
-                                    <td class="task-content">
-                                        <%task.content%>
-                                    </td>
-                                    <td class="task-actions-cell">
-                                        <div class="task-actions">
-                                            <a href="#"><span class="glyphicon glyphicon-sort"></span></a>
-                                            <a href="#" ng-click="editTask(task);"><span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a href="#" ng-click="deleteTask(task);"><span class="glyphicon glyphicon-trash"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        {% include 'tasks/elements/tasks_list.html' %}
                     </div>
                 </div>
 
@@ -63,106 +45,11 @@
             class="glyphicon glyphicon-plus"></span> {% trans 'Add Project' %}</a>
 
 
-
-        <!-- Modal -->
-        <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">{% trans 'New Project' %}</h4>
-              </div>
-              <div class="modal-body">
-                <input class="form-control" type="text" ng-model="project.name"/>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
-                <button type="button" class="btn btn-primary" ng-click="addProject();" data-dismiss="modal">{% trans 'Add Project' %}</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% include 'tasks/elements/new_project.html' %}
+        {% include 'tasks/elements/edit_task.html' %}
+        {% include 'tasks/elements/edit_project.html' %}
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="AuthModal" tabindex="-1" role="dialog" aria-labelledby="AuthLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title" id="AuthLabel">{% trans 'Sign In' %}</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                    <label for="id_login">{% trans 'Username' %}</label>
-                    <input class="form-control" id="id_login" type="text" />
-                </div>
-                <div class="form-group">
-                    <label for="id_password">{% trans 'Password' %}</label>
-                    <input type="password" class="form-control" id="id_password" />
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button"  class="btn btn-primary" ><span class="glyphicon glyphicon-log-in"></span> {% trans 'Sign In' %}</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <!-- Modal -->
-        <div class="modal fade" ng-controller="EditTaskController" ng-model="task" id="EditTaskModal" tabindex="-1" role="dialog" aria-labelledby="EditTaskModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form class="form">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="EditTaskModalLabel">{% trans 'Edit Task' %}</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group">
-                        <label for="id_task_content">{% trans 'Content' %}</label>
-                        <input type="text" class="form-control" id="id_task_content" placeholder="{% trans 'Task' %}" ng-model="task.content">
-                    </div>
-                    <div class="form-group">
-                        <label for="id_task_deadline">{% trans 'Deadline' %}</label>
-                        <input type="datetime" id="id_task_deadline" class="form-control"  ng-model="task.deadline">
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
-                    <button type="button" class="btn btn-primary" ng-click="save();">{% trans 'Save changes' %}</button>
-                  </div>
-                </div>
-            </form>
-          </div>
-        </div>
-
-
-        <!-- Modal -->
-        <div class="modal fade" ng-controller="EditProjectController" ng-model="project" id="EditProjectModal" tabindex="-1" role="dialog" aria-labelledby="EditProjectModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form class="form">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="EditProjectModalLabel">{% trans 'Edit Project' %}</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group">
-                        <label for="id_project_name">{% trans 'Name' %}</label>
-                        <input type="text" class="form-control" id="id_project_name" placeholder="{% trans 'Project name' %}" ng-model="project.name">
-                    </div>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
-                    <button type="button" class="btn btn-primary" ng-click="save();">{% trans 'Save changes' %}</button>
-                  </div>
-                </div>
-            </form>
-          </div>
-        </div>
     </div>
 
 {% endblock page %}

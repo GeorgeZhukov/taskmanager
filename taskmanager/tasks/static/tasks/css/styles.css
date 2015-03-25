@@ -3,7 +3,7 @@ html, body {
 }
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
+    display: none !important;
 }
 
 body {
@@ -114,9 +114,11 @@ body {
 .task:hover {
     background-color: #fffeef;
 }
+
 .task .task-today {
     color: #f00;
 }
+
 .task-done .task-content {
     text-decoration: line-through;
     color: #afafaf;
@@ -149,7 +151,26 @@ body {
     margin: 20px auto;
     padding: 40px;
     border-radius: 10px;
-    -webkit-box-shadow:  0px 1px 2px #464646;
-    -moz-box-shadow:  0px 1px 2px #464646;
-    box-shadow:  0px 1px 2px #464646;
+    -webkit-box-shadow: 0px 1px 2px #464646;
+    -moz-box-shadow: 0px 1px 2px #464646;
+    box-shadow: 0px 1px 2px #464646;
+}
+
+ul.djng-field-errors {
+    margin-left: 0;
+    display: inline-block;
+    list-style-type: none;
+}
+
+ul.djng-field-errors li.invalid {
+    color: #e9322d;
+}
+
+ul.djng-field-errors li.invalid:before {
+    content: "\2716\20"; /* adds a red cross before the error message */
+}
+
+ul.djng-field-errors li.valid:before {
+    color: #00c900;
+    content: "\2714"; /* adds a green tick */
 }

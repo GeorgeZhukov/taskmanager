@@ -5,11 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 from datetimewidget.widgets import DateTimeWidget
 
 from datetime import datetime
+from djangular.forms import NgFormValidationMixin, NgModelForm
+from djangular.styling.bootstrap3.forms import Bootstrap3ModelForm
 
 from .models import Project, Task
 
 
-class TaskForm(forms.ModelForm):
+class TaskForm(NgFormValidationMixin, Bootstrap3ModelForm):
     class Meta:
         model = Task
         fields = ('content', 'deadline', )
@@ -21,6 +23,11 @@ class TaskForm(forms.ModelForm):
             'deadline': DateTimeWidget(usel10n=True, bootstrap_version=3, options=dateTimeOptions)
         }
 
+
+class ProjectForm(NgFormValidationMixin, Bootstrap3ModelForm):
+    class Meta:
+        model = Project
+        fields = ('name', )
 
 class LoginForm(forms.ModelForm):
     class Meta:

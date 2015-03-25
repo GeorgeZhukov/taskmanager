@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'datetimewidget',
     'rest_framework',
     'djangular',
+    'braces',
 
     # project apps
     'tasks',
@@ -97,6 +98,9 @@ ROOT_URLCONF = 'taskmanager.urls'
 
 WSGI_APPLICATION = 'taskmanager.wsgi.application'
 
+
+from django.core.urlresolvers import reverse_lazy
+LOGIN_REDIRECT_URL = reverse_lazy('tasks:angular')
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

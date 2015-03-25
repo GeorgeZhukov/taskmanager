@@ -2,8 +2,10 @@ from django.views import generic
 
 from rest_framework import serializers, viewsets
 from rest_framework.permissions import IsAuthenticated
+from braces.views import LoginRequiredMixin
 
 from .models import Project, Task
+from .forms import TaskForm, ProjectForm
 
 # Create your views here.
 
@@ -41,5 +43,14 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return result
 
 
-class AngularView(generic.TemplateView):
+class AngularView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'tasks/angular.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AngularView, self).get_context_data(**kwargs)
+        context.update(task_form=TaskForm())
+        context.update(project_form=ProjectForm(form_name='edit_project'))
+        context.update(add_project_form=ProjectForm(form_name='add_project'))
+        # context.update()
+
+        return context
