@@ -1,33 +1,6 @@
-var app = angular.module('app', ['restangular', 'toaster', 'ng.django.forms']);
+var app = angular.module('app', ['services', 'ng.django.forms']);
 
-app.factory("notification", function (toaster) {
-    return {
-        showTaskAdded: function () {
-            toaster.success("Task Added");
-        },
-        showTaskRemoved: function () {
-            toaster.success("Task Removed");
-        },
-        showProjectAdded: function () {
-            toaster.success("Project Added");
-        },
-        showProjectRemoved: function () {
-            toaster.success("Project Removed");
-        },
-        showLoggedOut: function () {
-            toaster.info("You're logged out.");
-        },
-        showTaskSaved: function () {
-            toaster.success("The task saved.");
-        },
-        showProjectSaved: function () {
-            toaster.success("The project saved.");
-        }
-    };
-});
-
-
-app.config(function ($interpolateProvider, $httpProvider, RestangularProvider) {
+app.config(function ($interpolateProvider, $httpProvider) {
     $interpolateProvider.startSymbol('<%').endSymbol('%>');
 
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
@@ -51,32 +24,8 @@ app.config(function ($interpolateProvider, $httpProvider, RestangularProvider) {
         };
     });
 
-    RestangularProvider
-        .setBaseUrl('/api')
-        .setRequestSuffix('/?format=json')
-        .setErrorInterceptor(function (response, deferred, responseHandler) {
-            if (response.status === 403) {
-                //refreshAccesstoken().then(function () {
-                //    // Repeat the request and then call the handlers the usual way.
-                //    $http(response.config).then(responseHandler, deferred.reject);
-                //    // Be aware that no request interceptors are called this way.
-                //});
-                //notification.showLoggedOut();
-                return false; // error handled
-            }
-
-            return true; // error not handled
-        });
 });
 
-
-app.factory("project", function (Restangular) {
-    return Restangular.all('projects');
-});
-
-app.factory("task", function (Restangular) {
-    return Restangular.all('tasks');
-});
 
 app.controller('EditTaskCtrl', function ($scope, task, notification) {
     $scope.$on('editTask', function (event, args) {
@@ -102,10 +51,10 @@ app.controller('EditTaskCtrl', function ($scope, task, notification) {
     }
 });
 
-app.controller('AddProjectCtrl', function($scope, project, notification){
-    $scope.save = function() {
+app.controller('AddProjectCtrl', function ($scope, project, notification) {
+    $scope.save = function () {
         var projectInstance = {name: $scope.name};
-        project.post(projectInstance).then(function(){
+        project.post(projectInstance).then(function () {
             $scope.update();
             $('#newProjectModal').modal('hide');
         });
@@ -113,6 +62,8 @@ app.controller('AddProjectCtrl', function($scope, project, notification){
 });
 
 app.controller('ProjectsListCtrl', function ($scope, project, notification) {
+    $scope.projects = {};
+    $scope.project = {};
 
     $scope.update = function () {
         project.getList().then(function (projects) {
@@ -130,7 +81,6 @@ app.controller('ProjectsListCtrl', function ($scope, project, notification) {
 
     $scope.update();
 });
-
 
 
 app.controller('EditProjectCtrl', function ($scope, project, notification) {
@@ -198,7 +148,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
                 return task.id === taskInstance.id;
             });
             theTask.done = !theTask.done;
-            theTask.put().then(function(){
+            theTask.put().then(function () {
                 $scope.updateProject();
             });
 
