@@ -28,7 +28,9 @@ Run server...
     python manage.py runserver
 
 # Unit tests
-To run unit tests for backend...
+
+## Back-End
+To run unit tests with coverage...
 
     ./tests_coverage.sh
 
@@ -38,6 +40,8 @@ or
     coverage html
 
 after open **htmlcov/index.html** report in browser
+
+## Front-End
     
 # TODO
 - ~~Add js framework like AngularJS, Backbone, or something else...~~
