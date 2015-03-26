@@ -21,8 +21,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     tasks = TaskSerializer(many=True, read_only=True)
 
     def save(self, **kwargs):
+        kwargs['user'] = self.context['request'].user
         result = super(ProjectSerializer, self).save(**kwargs)
-        result.user = self.context['request'].user
         return result
 
     class Meta:
