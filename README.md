@@ -35,6 +35,9 @@ To run unit tests for backend...
 or
 
     coverage run --source='.' manage.py test
+    coverage html
+
+after open **htmlcov/index.html** report in browser
     
 # TODO
 - ~~Add js framework like AngularJS, Backbone, or something else...~~
