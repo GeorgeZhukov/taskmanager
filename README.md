@@ -1,5 +1,5 @@
 # Task Manager
-Simple Task Manger written on django.
+Simple Task Manger written on django and AngularJS.
 
 
 # Installation
