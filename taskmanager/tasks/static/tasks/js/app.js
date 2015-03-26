@@ -56,7 +56,7 @@ app.controller('AddProjectCtrl', function ($scope, project) {
         var projectInstance = {name: $scope.name};
         project.post(projectInstance).then(function () {
             $scope.update();
-            $('#newProjectModal').modal('hide');
+            //$('#newProjectModal').modal('hide');
         });
     };
 });
