@@ -29,9 +29,11 @@ Run server...
 
 # Unit tests
 To run unit tests for backend...
+
     ./tests_coverage.sh
 
 or
+
     coverage run --source='.' manage.py test
     
 # TODO
