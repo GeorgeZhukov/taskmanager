@@ -43,9 +43,19 @@ after open **htmlcov/index.html** report in browser
 
 ## Front-End
 
+### Easy way
+
+    open ./taskmanager/tasks/jasmine/SpecRunner.html
+    
+### Advanced
+
 Install karma and dependencies...
 
     npm install
+    
+Update browsers configuration in **karma.conf.js**
+
+    browsers: ['Chrome', 'Safari'],
     
 Start karma...
 
