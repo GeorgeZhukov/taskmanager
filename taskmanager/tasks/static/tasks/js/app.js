@@ -51,7 +51,7 @@ app.controller('EditTaskCtrl', function ($scope, task, notification) {
     }
 });
 
-app.controller('AddProjectCtrl', function ($scope, project, notification) {
+app.controller('AddProjectCtrl', function ($scope, project) {
     $scope.save = function () {
         var projectInstance = {name: $scope.name};
         project.post(projectInstance).then(function () {
