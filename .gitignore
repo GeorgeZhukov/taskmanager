@@ -2,3 +2,7 @@ venv/
 *.pyc
 db.sqlite3
 .idea
+coverage/
+node_modules/
+.coverage
+htmlcov/
