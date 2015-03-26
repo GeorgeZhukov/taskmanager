@@ -42,6 +42,16 @@ or
 after open **htmlcov/index.html** report in browser
 
 ## Front-End
+
+Install karma and dependencies...
+
+    npm install
+    
+Start karma...
+
+    karma start
+    
+Also coverage will be available in **coverage** folder.
     
 # TODO
 - ~~Add js framework like AngularJS, Backbone, or something else...~~
