@@ -20,9 +20,15 @@ class TaskSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     tasks = TaskSerializer(many=True, read_only=True)
 
+    def save(self, **kwargs):
+        result = super(ProjectSerializer, self).save(**kwargs)
+        result.user = self.context['request'].user
+        return result
+
     class Meta:
         model = Project
         fields = ('id', 'user', 'name', 'tasks', )
+        read_only_fields = ('user', )
 
 
 # ViewSets define the view behavior.
@@ -31,16 +37,17 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
+    def get_queryset(self):
+        return Task.objects.filter(project__user=self.request.user)
+
 
 class ProjectViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
-    def create(self, request, *args, **kwargs):
-        result = super(ProjectViewSet, self).create(request, *args, **kwargs)
-        result.user = request.user
-        return result
+    def get_queryset(self):
+        return Project.objects.filter(user=self.request.user)
 
 
 class AngularView(LoginRequiredMixin, generic.TemplateView):
