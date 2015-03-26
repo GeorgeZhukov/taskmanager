@@ -36,10 +36,26 @@ describe("Unit: app", function () {
         }
     ];
 
+    // Mock jquery modal
+    var modalService = {
+        showEditProjectModal: function () {},
+        hideEditProjectModal: function () {},
+        showEditTaskModal: function(){},
+        hideEditTaskModal: function(){},
+        hideNewProjectModal: function(){}
+    };
+
+    beforeEach(function(){
+        module(function($provide){
+            $provide.value("modal", modalService);
+        });
+    });
+
     beforeEach(inject(function (_$httpBackend_, _$controller_, $rootScope) {
         $httpBackend = _$httpBackend_;
         $controller = _$controller_;
         scope = $rootScope.$new();
+        modal = modalService;
     }));
 
     afterEach(function () {
@@ -94,17 +110,18 @@ describe("Unit: app", function () {
         });
     })
 
-
     describe("project controller", function(){
-        var ProjectCtrl;
+        var ProjectCtrl, $rootScope;
 
-        beforeEach(function(){
+        beforeEach(inject(function(_$rootScope_){
+            $rootScope = _$rootScope_;
+            spyOn($rootScope, '$broadcast');
             scope.update = function(){};
             $httpBackend.whenGET("/api/projects/?format=json").respond(projects);
             scope.project = projects[0];
             ProjectCtrl = $controller("ProjectCtrl", {$scope: scope});
             $httpBackend.flush();
-        });
+        }));
 
         it("get project", function(){
             expect(scope.project.plain()).toEqual(projects[0]); // plain to convert restangular to raw item
@@ -143,6 +160,66 @@ describe("Unit: app", function () {
             $httpBackend.flush();
         });
 
+        it("edit project broadcast event", function(){
+            scope.edit();
+            expect($rootScope.$broadcast).toHaveBeenCalledWith("editProject", scope.project);
+        });
+
+        it("edit task broadcast event", function(){
+            scope.editTask(tasks[0]);
+            expect($rootScope.$broadcast).toHaveBeenCalledWith("editTask", tasks[0]);
+        });
+
     })
+
+    describe("edit project controller", function(){
+        var EditProjectCtrl;
+
+        beforeEach(function(){
+            EditProjectCtrl = $controller("EditProjectCtrl", {$scope: scope});
+        });
+
+        it("receive event", function(){
+            scope.$broadcast("editProject", projects[0]);
+            spyOn(scope, '$broadcast').and.callThrough();
+        });
+
+        it("save project", function(){
+            scope.project = projects[0];
+            $httpBackend.whenGET("/api/projects/?format=json").respond(projects);
+            $httpBackend.whenPUT("/api/projects/1/?format=json").respond(200, '');
+            scope.save();
+            $httpBackend.expectGET("/api/projects/?format=json");
+            $httpBackend.expectPUT("/api/projects/1/?format=json");
+            $httpBackend.flush();
+        });
+    });
+
+    describe("edit task controller", function(){
+        var EditTaskCtrl;
+
+        beforeEach(function(){
+            EditTaskCtrl = $controller("EditTaskCtrl", {$scope: scope});
+
+        });
+
+        it("receive edit task event", function (){
+            scope.$broadcast("editTask", tasks[2]);
+            spyOn(scope, '$broadcast').and.callThrough();
+            expect(scope.content).toEqual(tasks[2].content);
+        });
+
+        it("save task", function(){
+            scope.task = tasks[1];
+            scope.content = tasks[1].content;
+            scope.deadline = "";
+            $httpBackend.whenGET("/api/tasks/?format=json").respond(tasks);
+            $httpBackend.whenPUT("/api/tasks/2/?format=json").respond(200, '');
+            scope.save();
+            $httpBackend.expectGET("/api/tasks/?format=json");
+            $httpBackend.expectPUT("/api/tasks/2/?format=json");
+            $httpBackend.flush();
+        });
+    });
 
 });

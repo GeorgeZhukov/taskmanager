@@ -27,12 +27,12 @@ app.config(function ($interpolateProvider, $httpProvider) {
 });
 
 
-app.controller('EditTaskCtrl', function ($scope, task, notification) {
+app.controller('EditTaskCtrl', function ($scope, task, notification, modal) {
     $scope.$on('editTask', function (event, args) {
         $scope.task = args;
         $scope.content = $scope.task.content;
         $scope.deadline = $scope.task.deadline;
-        $('#EditTaskModal').modal('show');
+        modal.showEditTaskModal();
     });
     $scope.save = function () {
         $scope.task.content = $scope.content;
@@ -45,18 +45,18 @@ app.controller('EditTaskCtrl', function ($scope, task, notification) {
             theTask.content = $scope.content;
             theTask.deadline = $scope.deadline;
             theTask.put();
-            $('#EditTaskModal').modal('hide');
+            modal.hideEditTaskModal();
             notification.showTaskSaved();
         });
     }
 });
 
-app.controller('AddProjectCtrl', function ($scope, project) {
+app.controller('AddProjectCtrl', function ($scope, project, modal) {
     $scope.save = function () {
         var projectInstance = {name: $scope.name};
         project.post(projectInstance).then(function () {
             $scope.update();
-            //$('#newProjectModal').modal('hide');
+            modal.hideNewProjectModal();
         });
     };
 });
@@ -83,11 +83,11 @@ app.controller('ProjectsListCtrl', function ($scope, project, notification) {
 });
 
 
-app.controller('EditProjectCtrl', function ($scope, project, notification) {
+app.controller('EditProjectCtrl', function ($scope, project, notification, modal) {
     $scope.$on('editProject', function (event, args) {
         $scope.project = args;
         $scope.name = $scope.project.name;
-        $('#EditProjectModal').modal('show');
+        modal.showEditProjectModal();//
     });
     $scope.save = function () {
         $scope.project.name = $scope.name;
@@ -99,7 +99,7 @@ app.controller('EditProjectCtrl', function ($scope, project, notification) {
             theProject.name = $scope.project.name;
 
             theProject.put();
-            $('#EditProjectModal').modal('hide');
+            modal.hideEditProjectModal();
             notification.showProjectSaved();
         });
     }

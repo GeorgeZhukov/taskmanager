@@ -36,6 +36,27 @@ app.factory("notification", function (toaster) {
     };
 });
 
+app.factory("modal", function () {
+    return {
+        showEditProjectModal: function () {
+            $('#EditProjectModal').modal('show');
+        },
+        hideEditProjectModal: function () {
+            $('#EditProjectModal').modal('hide');
+        },
+        showEditTaskModal: function(){
+            $('#EditTaskModal').modal('show');
+        },
+        hideEditTaskModal: function(){
+            $('#EditTaskModal').modal('hide');
+        },
+        hideNewProjectModal: function(){
+            $('#newProjectModal').modal('hide');
+        }
+
+    };
+});
+
 
 app.factory("project", function (Restangular) {
     return Restangular.all('projects');
