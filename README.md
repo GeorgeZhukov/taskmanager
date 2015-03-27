@@ -65,4 +65,4 @@ Also coverage will be available in **coverage** folder.
     
 # TODO
 - ~~Add js framework like AngularJS, Backbone, or something else...~~
-- Add unit tests
+- ~~Add unit tests~~
