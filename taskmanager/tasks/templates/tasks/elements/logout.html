@@ -1,0 +1,23 @@
+{% load i18n %}
+<!-- Modal -->
+<div class="modal fade" ng-controller="LogoutCtrl" id="LogoutModal" tabindex="-1" role="dialog"
+     aria-labelledby="LogoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form ng-submit="logout();" class="form" novalidate>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="LogoutModalLabel">{% trans 'Sign Out' %}</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">{% trans 'Are you sure want sign out?' %}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}</button>
+                    <button type="submit" class="btn btn-warning" >{% trans 'Sign Out' %}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

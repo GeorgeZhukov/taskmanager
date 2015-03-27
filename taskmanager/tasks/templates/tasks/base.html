@@ -12,7 +12,7 @@
     <!-- Bootstrap -->
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'tasks/css/styles.css' %}"/>
-    <link href="{% static 'tasks/css/toaster.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'tasks/css/toaster.min.css' %}" rel="stylesheet"/>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -28,10 +28,8 @@
 <body>
 
 <section id="page" class="container">
-    {% if user.is_authenticated %}
-        <a class="btn btn-warning pull-right" style="margin: 10px;" href="{% url 'account_logout' %}"><span
-                class="glyphicon glyphicon-log-out"></span> {% trans 'Sign Out' %}</a>
-    {% endif %}
+    <button class="btn btn-warning pull-right" style="margin: 10px;" data-toggle="modal" data-target="#LogoutModal"><span
+            class="glyphicon glyphicon-log-out"></span>  {% trans 'Sign Out' %}</button>
 
     <div class="clearfix"></div>
     <div id="projects-wrapper" class="center-block">

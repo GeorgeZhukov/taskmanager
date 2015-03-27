@@ -9,15 +9,16 @@ app.config(function ($interpolateProvider, $httpProvider) {
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     // alternatively, register the interceptor via an anonymous factory
-    $httpProvider.interceptors.push(function ($q, notification) {
+    $httpProvider.interceptors.push(function ($q, notification, modal) {
         return {
             // optional method
             'responseError': function (rejection) {
                 // do something on error
                 if (rejection.status == 403) {
                     // auth problem
-                    notification.showLoggedOut();
-                    document.location.href = '/accounts/login/';
+                    //notification.showLoggedOut();
+                    //document.location.href = '/accounts/login/';
+                    modal.showLoginModal();
                 }
                 return $q.reject(rejection);
             }
@@ -62,6 +63,13 @@ app.controller('AddProjectCtrl', function ($scope, project, modal) {
 });
 
 app.controller('ProjectsListCtrl', function ($scope, project, notification) {
+    $scope.$on('userAuthorized', function (event, args) {
+        $scope.update();
+    });
+    $scope.$on('userUnauthorized', function (event, args) {
+        $scope.projects = {};
+        $scope.update();
+    });
     $scope.projects = {};
     $scope.project = {};
 
@@ -80,6 +88,27 @@ app.controller('ProjectsListCtrl', function ($scope, project, notification) {
     };
 
     $scope.update();
+});
+
+app.controller("SignUpCtrl", function ($scope, notification, modal, auth, $rootScope) {
+    $scope.signup = function () {
+        if ($scope.password1 != $scope.password2){
+            notification.showPasswordConfirm();
+            return;
+        }
+        auth.signup($scope.username, $scope.password1).success(function (data, status, headers, config) {
+            // this callback will be called asynchronously
+            // when the response is available
+            $rootScope.$broadcast('userAuthorized', data.data);
+            modal.hideSignUpModal();
+        }).error(function (data, status, headers, config) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            notification.showUnknownError(data.detail);
+        }).then(function () {
+            $scope.password = "";
+        });
+    };
 });
 
 
@@ -103,6 +132,35 @@ app.controller('EditProjectCtrl', function ($scope, project, notification, modal
             notification.showProjectSaved();
         });
     }
+});
+
+app.controller("LogoutCtrl", function ($scope, auth, notification, modal, $rootScope) {
+    $scope.logout = function () {
+        auth.logout().then(function () {
+            $rootScope.$broadcast('userUnauthorized');
+            notification.showLoggedOut();
+            modal.hideLogoutModal();
+            modal.showLoginModal();
+        });
+    }
+});
+
+app.controller("LoginCtrl", function ($scope, notification, auth, modal, $rootScope) {
+    $scope.login = function () {
+        auth.login($scope.username, $scope.password).success(function (data, status, headers, config) {
+            // this callback will be called asynchronously
+            // when the response is available
+            $rootScope.$broadcast('userAuthorized', data.data);
+            modal.hideLoginModal();
+        }).error(function (data, status, headers, config) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            notification.showWrongCredentials();
+        }).then(function () {
+            $scope.password = "";
+        });
+
+    };
 });
 
 app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notification) {
@@ -142,11 +200,11 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
         })
     };
 
-    $scope.canMoveTaskUp = function(taskInstance){
+    $scope.canMoveTaskUp = function (taskInstance) {
         return taskInstance.order_id > 1;
     };
 
-    $scope.canMoveTaskDown = function(taskInstance){
+    $scope.canMoveTaskDown = function (taskInstance) {
         return taskInstance.order_id < $scope.project.tasks.length;
     };
 

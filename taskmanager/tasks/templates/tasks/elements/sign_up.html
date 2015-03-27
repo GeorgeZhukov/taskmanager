@@ -1,0 +1,21 @@
+{% load i18n %}
+<!-- Modal -->
+<div class="modal fade" ng-controller="SignUpCtrl" ng-model="user" id="SignUpModal" tabindex="-1" role="dialog"
+     aria-labelledby="SignUpModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form name="{{ signup_form.form_name }}" ng-submit="signup();" class="form" novalidate>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="SignupModalLabel">{% trans 'Sign Up' %}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ signup_form }}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"
+                            ng-disabled="{{ signup_form.form_name }}.$invalid">{% trans 'Sign Up' %}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

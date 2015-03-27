@@ -10,8 +10,29 @@ app.config(function (RestangularProvider) {
         .setRequestSuffix('/?format=json');
 });
 
+app.factory("auth", function ($http) {
+    return {
+        login: function (username, password) {
+            return $http.put("/api/auth/", {username: username, password: password});
+        },
+        logout: function () {
+            return $http.delete("/api/auth/");
+        },
+        signup: function (username, password) {
+            return $http.post("/api/auth/", {username: username, password: password});
+        }
+
+    };
+});
+
 app.factory("notification", function (toaster) {
     return {
+        showUnknownError: function (msg){
+            toaster.error(msg);
+        },
+        showPasswordConfirm: function(){
+            toaster.warning("Passwords not equal");
+        },
         showTaskAdded: function () {
             toaster.success("Task Added");
         },
@@ -32,6 +53,9 @@ app.factory("notification", function (toaster) {
         },
         showProjectSaved: function () {
             toaster.success("The project saved.");
+        },
+        showWrongCredentials: function () {
+            toaster.error("Wrong credentials.");
         }
     };
 });
@@ -44,14 +68,27 @@ app.factory("modal", function () {
         hideEditProjectModal: function () {
             $('#EditProjectModal').modal('hide');
         },
-        showEditTaskModal: function(){
+        showEditTaskModal: function () {
             $('#EditTaskModal').modal('show');
         },
-        hideEditTaskModal: function(){
+        hideEditTaskModal: function () {
             $('#EditTaskModal').modal('hide');
         },
-        hideNewProjectModal: function(){
+        hideNewProjectModal: function () {
             $('#newProjectModal').modal('hide');
+        },
+        hideLoginModal: function () {
+            $("#LoginModal").modal('hide');
+        },
+        showLoginModal: function () {
+            $("#LoginModal").modal('show');
+        },
+        hideLogoutModal: function () {
+            $("#LogoutModal").modal('hide');
+        },
+        hideSignUpModal: function(){
+            $("#SignUpModal").modal('hide');
+            this.hideLoginModal();
         }
 
     };

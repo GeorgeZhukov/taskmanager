@@ -9,45 +9,53 @@
 
         <div class="projects" ng-repeat="project in projects">
             <div class="project" ng-controller="ProjectCtrl" ng-model="project">
-                    <div class="project-header">
-                        <div class="row">
-                            <span class="glyphicon glyphicon-calendar"></span><% project.name %>
-                            <div class="project-actions pull-right">
-                                <a href="#" ng-click="edit();"><span
-                                        class="glyphicon glyphicon-pencil"></span></a>
-                                <a ng-click="delete();" href="#"><span
-                                        class="glyphicon glyphicon-trash"></span></a>
-                            </div>
+                <div class="project-header">
+                    <div class="row">
+                        <span class="glyphicon glyphicon-calendar"></span><% project.name %>
+                        <div class="project-actions pull-right">
+                            <a href="#" ng-click="edit();"><span
+                                    class="glyphicon glyphicon-pencil"></span></a>
+                            <a ng-click="delete();" href="#"><span
+                                    class="glyphicon glyphicon-trash"></span></a>
                         </div>
                     </div>
-                    <div class="new-task">
-                        <form name="new_task" class="form" ng-submit="addTask(project);" novalidate>
-                            <div class="input-group">
+                </div>
+                <div class="new-task">
+                    <form name="new_task" class="form" ng-submit="addTask(project);" novalidate>
+                        <div class="input-group">
                                 <span class="input-group-btn">
-                                    <button type="submit" ng-disabled="new_task.$invalid" class="btn btn-success btn-sm" ><span
+                                    <button type="submit" ng-disabled="new_task.$invalid"
+                                            class="btn btn-success btn-sm"><span
                                             class="glyphicon glyphicon-plus"></span></button>
                                 </span>
-                                <input type="text" ng-minlength="3" ng-maxlength="50" required ng-model="task.content" class="form-control input-sm" placeholder="{% trans 'Start typing here to create a task' %}">
+                            <input type="text" ng-minlength="3" ng-maxlength="50" required ng-model="task.content"
+                                   class="form-control input-sm"
+                                   placeholder="{% trans 'Start typing here to create a task' %}">
                                 <span class="input-group-btn">
-                                    <button type="submit" ng-disabled="new_task.$invalid" class="btn btn-success btn-sm" >{% trans 'Add task' %}</button>
+                                    <button type="submit" ng-disabled="new_task.$invalid"
+                                            class="btn btn-success btn-sm">{% trans 'Add task' %}</button>
                                 </span>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="project-body">
-                        {% include 'tasks/elements/tasks_list.html' %}
-                    </div>
+                        </div>
+                    </form>
                 </div>
+                <div class="project-body">
+                    {% include 'tasks/elements/tasks_list.html' %}
+                </div>
+            </div>
 
         </div>
 
-        <a class="btn btn-primary btn-lg center-block" style="width: 160px;" data-toggle="modal" data-target="#newProjectModal"><span
-            class="glyphicon glyphicon-plus"></span> {% trans 'Add Project' %}</a>
+        <a class="btn btn-primary btn-lg center-block" style="width: 160px;" data-toggle="modal"
+           data-target="#newProjectModal"><span
+                class="glyphicon glyphicon-plus"></span> {% trans 'Add Project' %}</a>
 
 
         {% include 'tasks/elements/new_project.html' %}
         {% include 'tasks/elements/edit_task.html' %}
         {% include 'tasks/elements/edit_project.html' %}
+        {% include 'tasks/elements/login.html' %}
+        {% include 'tasks/elements/logout.html' %}
+        {% include 'tasks/elements/sign_up.html' %}
 
 
     </div>
