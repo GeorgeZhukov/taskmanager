@@ -21,15 +21,15 @@
                         </div>
                     </div>
                     <div class="new-task">
-                        <form class="form" ng-submit="addTask(project);">
+                        <form name="new_task" class="form" ng-submit="addTask(project);" novalidate>
                             <div class="input-group">
                                 <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-success btn-sm" ><span
+                                    <button type="submit" ng-disabled="new_task.$invalid" class="btn btn-success btn-sm" ><span
                                             class="glyphicon glyphicon-plus"></span></button>
                                 </span>
-                                <input type="text" required ng-model="task.content" class="form-control input-sm" placeholder="{% trans 'Start typing here to create a task' %}">
+                                <input type="text" ng-minlength="3" ng-maxlength="50" required ng-model="task.content" class="form-control input-sm" placeholder="{% trans 'Start typing here to create a task' %}">
                                 <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-success btn-sm" >{% trans 'Add task' %}</button>
+                                    <button type="submit" ng-disabled="new_task.$invalid" class="btn btn-success btn-sm" >{% trans 'Add task' %}</button>
                                 </span>
                             </div>
                         </form>

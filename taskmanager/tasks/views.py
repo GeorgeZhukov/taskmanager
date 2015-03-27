@@ -12,9 +12,22 @@ from .forms import TaskForm, ProjectForm
 
 # Serializers define the API representation.
 class TaskSerializer(serializers.ModelSerializer):
+    def save(self, **kwargs):
+
+        if self.instance:
+            # Change order id on target task
+            order_id = self.validated_data['order_id']
+            project = self.validated_data['project']
+            task = project.tasks.filter(order_id=order_id).exclude(pk=self.instance.pk).first()
+            task.order_id = self.instance.order_id
+            task.save()
+
+        result = super(TaskSerializer, self).save(**kwargs)
+        return result
+
     class Meta:
         model = Task
-        fields = ('id', 'project', 'content', 'deadline', 'done', )
+        fields = ('id', 'project', 'content', 'deadline', 'done', 'order_id', )
 
 
 class ProjectSerializer(serializers.ModelSerializer):

@@ -142,6 +142,48 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
         })
     };
 
+    $scope.moveUpTask = function (taskInstance) {
+        task.getList().then(function (tasks) {
+            var theTask = _.find(tasks, function (task) {
+                return task.id === taskInstance.id;
+            });
+
+            if (theTask.order_id == 1) {
+                notification.showCannotMoveTask();
+            }
+            theTask.order_id -= 1;
+            theTask.put().then(function () {
+                $scope.updateProject();
+            });
+
+        });
+    };
+
+    $scope.moveDownTask = function (taskInstance) {
+        task.getList().then(function (tasks) {
+            var theTask = _.find(tasks, function (task) {
+                return task.id === taskInstance.id;
+            });
+
+            // Search max order id
+            var max_order_id = 0;
+            _.each(tasks, function (task) {
+                if (max_order_id < task.order_id) {
+                    max_order_id = task.order_id;
+                }
+            });
+
+            if (theTask.order_id == max_order_id) {
+                notification.showCannotMoveTask();
+            }
+            theTask.order_id += 1;
+            theTask.put().then(function () {
+                $scope.updateProject();
+            });
+
+        });
+    };
+
     $scope.toggleTaskStatus = function (taskInstance) {
         task.getList().then(function (tasks) {
             var theTask = _.find(tasks, function (task) {
