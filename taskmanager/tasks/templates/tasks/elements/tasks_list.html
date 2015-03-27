@@ -9,8 +9,8 @@
         </td>
         <td class="task-actions-cell">
             <div class="task-actions">
-                <a href="#" ng-click="moveUpTask(task);"><span class="glyphicon glyphicon-arrow-up"></span></a>
-                <a href="#" ng-click="moveDownTask(task);"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                <a href="#" ng-show="canMoveTaskUp(task);" ng-click="moveUpTask(task);"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                <a href="#" ng-show="canMoveTaskDown(task);" ng-click="moveDownTask(task);"><span class="glyphicon glyphicon-arrow-down"></span></a>
                 <a href="#" ng-click="editTask(task);"><span class="glyphicon glyphicon-pencil"></span></a>
                 <a href="#" ng-click="deleteTask(task);"><span class="glyphicon glyphicon-trash"></span></a>
             </div>

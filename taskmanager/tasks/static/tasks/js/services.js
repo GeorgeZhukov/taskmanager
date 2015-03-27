@@ -32,9 +32,6 @@ app.factory("notification", function (toaster) {
         },
         showProjectSaved: function () {
             toaster.success("The project saved.");
-        },
-        showCannotMoveTask: function () {
-            toaster.error("Can't move task.");
         }
     };
 });

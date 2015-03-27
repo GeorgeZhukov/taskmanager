@@ -142,15 +142,20 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
         })
     };
 
+    $scope.canMoveTaskUp = function(taskInstance){
+        return taskInstance.order_id > 1;
+    };
+
+    $scope.canMoveTaskDown = function(taskInstance){
+        return taskInstance.order_id < $scope.project.tasks.length;
+    };
+
     $scope.moveUpTask = function (taskInstance) {
         task.getList().then(function (tasks) {
             var theTask = _.find(tasks, function (task) {
                 return task.id === taskInstance.id;
             });
 
-            if (theTask.order_id == 1) {
-                notification.showCannotMoveTask();
-            }
             theTask.order_id -= 1;
             theTask.put().then(function () {
                 $scope.updateProject();
@@ -165,17 +170,6 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
                 return task.id === taskInstance.id;
             });
 
-            // Search max order id
-            var max_order_id = 0;
-            _.each(tasks, function (task) {
-                if (max_order_id < task.order_id) {
-                    max_order_id = task.order_id;
-                }
-            });
-
-            if (theTask.order_id == max_order_id) {
-                notification.showCannotMoveTask();
-            }
             theTask.order_id += 1;
             theTask.put().then(function () {
                 $scope.updateProject();
