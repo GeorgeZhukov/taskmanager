@@ -4,8 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from datetimewidget.widgets import DateTimeWidget
 
-from allauth.account.forms import SignupForm, LoginForm
-
 from datetime import datetime
 
 from djangular.forms import NgFormValidationMixin, NgModelForm

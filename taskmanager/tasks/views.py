@@ -7,8 +7,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView, Response
 from rest_framework.exceptions import NotFound, APIException
 
-from braces.views import LoginRequiredMixin
-
 from .models import Project, Task
 from .forms import TaskForm, ProjectForm, NgSignupForm, NgLoginForm
 

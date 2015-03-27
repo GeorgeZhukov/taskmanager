@@ -12,7 +12,6 @@ router.register(r'projects', ProjectViewSet)
 
 urlpatterns = patterns('',
     url(r'^', include('tasks.urls', namespace='tasks')),
-    (r'^accounts/', include('allauth.urls')),
     url(r'^api/', include(router.urls)),
     url(r'^api/auth/$', AuthView.as_view()),
     # url(r'^djangular/', include('djangular.urls')),
