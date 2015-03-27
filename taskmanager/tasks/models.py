@@ -54,12 +54,12 @@ class Task(models.Model):
                 self.order_id = 1
 
         # validate order id
-        if self.pk:
-            max = max_order()
-            if self.order_id not in range(1, max + 2): # If last item change order
-                raise ValueError("Invalid order id")   # there is moment where max
-                                                       # actually will be incorrect
-                                                       # so we use + 2 to keep margin
+        # if self.pk:
+        #     max = max_order()
+        #     if self.order_id not in range(1, max + 2): # If last item change order
+        #         raise ValueError("Invalid order id")   # there is moment where max
+        #                                                # actually will be incorrect
+        #                                                # so we use + 2 to keep margin
 
 
         return super(Task, self).save(force_insert, force_update, using, update_fields)
