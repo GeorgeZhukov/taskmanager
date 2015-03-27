@@ -104,7 +104,8 @@ app.controller("SignUpCtrl", function ($scope, notification, modal, auth, $rootS
             // or server returns response with an error status.
             notification.showUnknownError(data.detail);
         }).then(function () {
-            $scope.password = "";
+            $scope.password1 = "";
+            $scope.password2 = "";
         });
     };
 });
