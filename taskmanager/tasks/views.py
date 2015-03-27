@@ -17,10 +17,11 @@ class TaskSerializer(serializers.ModelSerializer):
         if self.instance:
             # Change order id on target task
             order_id = self.validated_data['order_id']
-            project = self.validated_data['project']
-            task = project.tasks.filter(order_id=order_id).exclude(pk=self.instance.pk).first()
-            task.order_id = self.instance.order_id
-            task.save()
+            if self.instance.order_id != order_id:
+                project = self.validated_data['project']
+                task = project.tasks.filter(order_id=order_id).exclude(pk=self.instance.pk).first()
+                task.order_id = self.instance.order_id
+                task.save()
 
         result = super(TaskSerializer, self).save(**kwargs)
         return result
