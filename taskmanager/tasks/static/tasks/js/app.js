@@ -28,7 +28,7 @@ app.config(function ($interpolateProvider, $httpProvider) {
 });
 
 
-app.controller('EditTaskCtrl', function ($scope, task, notification, modal) {
+app.controller('EditTaskCtrl', function ($scope, tasks, notification, modal) {
     $scope.$on('editTask', function (event, args) {
         $scope.task = args;
         $scope.content = $scope.task.content;
@@ -38,31 +38,29 @@ app.controller('EditTaskCtrl', function ($scope, task, notification, modal) {
     $scope.save = function () {
         $scope.task.content = $scope.content;
         $scope.task.deadline = $scope.deadline;
-        //todo: optimize
-        task.getList().then(function (tasks) {
-            var theTask = _.find(tasks, function (task) {
-                return task.id === $scope.task.id;
+
+        tasks.byId($scope.task.id).get().then(function (task) {
+            task.content = $scope.content;
+            task.deadline = $scope.deadline;
+            task.put().then(function () {
+                modal.hideEditTaskModal();
+                notification.showTaskSaved();
             });
-            theTask.content = $scope.content;
-            theTask.deadline = $scope.deadline;
-            theTask.put();
-            modal.hideEditTaskModal();
-            notification.showTaskSaved();
         });
     }
 });
 
-app.controller('AddProjectCtrl', function ($scope, project, modal) {
+app.controller('AddProjectCtrl', function ($scope, projects, modal) {
     $scope.save = function () {
         var projectInstance = {name: $scope.name};
-        project.post(projectInstance).then(function () {
+        projects.all().post(projectInstance).then(function () {
             $scope.update();
             modal.hideNewProjectModal();
         });
     };
 });
 
-app.controller('ProjectsListCtrl', function ($scope, project, notification) {
+app.controller('ProjectsListCtrl', function ($scope, projects, notification) {
     $scope.$on('userAuthorized', function (event, args) {
         $scope.update();
     });
@@ -74,14 +72,14 @@ app.controller('ProjectsListCtrl', function ($scope, project, notification) {
     $scope.project = {};
 
     $scope.update = function () {
-        project.getList().then(function (projects) {
+        projects.all().getList().then(function (projects) {
             $scope.projects = projects;
             $scope.project = {};
         });
     };
 
     $scope.addProject = function () {
-        project.post($scope.project).then(function () {
+        projects.all().post($scope.project).then(function () {
             $scope.update();
             notification.showProjectAdded();
         });
@@ -92,7 +90,7 @@ app.controller('ProjectsListCtrl', function ($scope, project, notification) {
 
 app.controller("SignUpCtrl", function ($scope, notification, modal, auth, $rootScope) {
     $scope.signup = function () {
-        if ($scope.password1 != $scope.password2){
+        if ($scope.password1 != $scope.password2) {
             notification.showPasswordConfirm();
             return;
         }
@@ -112,7 +110,7 @@ app.controller("SignUpCtrl", function ($scope, notification, modal, auth, $rootS
 });
 
 
-app.controller('EditProjectCtrl', function ($scope, project, notification, modal) {
+app.controller('EditProjectCtrl', function ($scope, projects, notification, modal) {
     $scope.$on('editProject', function (event, args) {
         $scope.project = args;
         $scope.name = $scope.project.name;
@@ -120,17 +118,14 @@ app.controller('EditProjectCtrl', function ($scope, project, notification, modal
     });
     $scope.save = function () {
         $scope.project.name = $scope.name;
-        //todo: optimize
-        project.getList().then(function (projects) {
-            var theProject = _.find(projects, function (project) {
-                return project.id === $scope.project.id;
+        projects.byId($scope.project.id).get().then(function (project) {
+            project.name = $scope.project.name;
+            project.put().then(function () {
+                modal.hideEditProjectModal();
+                notification.showProjectSaved();
             });
-            theProject.name = $scope.project.name;
-
-            theProject.put();
-            modal.hideEditProjectModal();
-            notification.showProjectSaved();
         });
+
     }
 });
 
@@ -163,15 +158,11 @@ app.controller("LoginCtrl", function ($scope, notification, auth, modal, $rootSc
     };
 });
 
-app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notification) {
+app.controller('ProjectCtrl', function ($scope, $rootScope, projects, tasks, notification) {
 
     $scope.updateProject = function () {
-        // todo: optimize
-        project.getList().then(function (projects) {
-            var theProject = _.find(projects, function (project) {
-                return project.id === $scope.project.id;
-            });
-            $scope.project = theProject;
+        projects.byId($scope.project.id).get().then(function (project) {
+            $scope.project = project;
         });
 
         $scope.task = {};
@@ -194,7 +185,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
 
     $scope.addTask = function () {
         $scope.task.project = $scope.project.id;
-        task.post($scope.task).then(function () {
+        tasks.all().post($scope.task).then(function () {
             $scope.updateProject();
             notification.showTaskAdded();
         })
@@ -209,7 +200,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
     };
 
     $scope.moveUpTask = function (taskInstance) {
-        task.getList().then(function (tasks) {
+        tasks.all().getList().then(function (tasks) {
             var theTask = _.find(tasks, function (task) {
                 return task.id === taskInstance.id;
             });
@@ -223,7 +214,7 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
     };
 
     $scope.moveDownTask = function (taskInstance) {
-        task.getList().then(function (tasks) {
+        tasks.all().getList().then(function (tasks) {
             var theTask = _.find(tasks, function (task) {
                 return task.id === taskInstance.id;
             });
@@ -237,30 +228,21 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, project, task, notif
     };
 
     $scope.toggleTaskStatus = function (taskInstance) {
-        task.getList().then(function (tasks) {
-            var theTask = _.find(tasks, function (task) {
-                return task.id === taskInstance.id;
-            });
-            theTask.done = !theTask.done;
-            theTask.put().then(function () {
+        tasks.byId(taskInstance.id).get().then(function (task) {
+            task.done = !task.done;
+            task.put().then(function () {
                 $scope.updateProject();
             });
-
         });
     };
 
     $scope.deleteTask = function (taskInstance) {
-        task.getList().then(function (tasks) {
-            var theTask = _.find(tasks, function (task) {
-                return task.id === taskInstance.id;
-            });
-            // Alternatively delete the element from the list when finished
-            theTask.remove().then(function () {
-                // Updating the list and removing the user after the response is OK.
-                $scope.updateProject();
-                notification.showTaskRemoved();
-            });
+        tasks.byId(taskInstance.id).remove().then(function () {
+            // Updating the list and removing the user after the response is OK.
+            $scope.updateProject();
+            notification.showTaskRemoved();
         });
+
     };
     $scope.updateProject();
 });

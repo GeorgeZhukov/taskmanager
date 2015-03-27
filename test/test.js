@@ -108,7 +108,7 @@ describe("Unit: app", function () {
             $httpBackend.expectPOST("/api/projects/?format=json");
             $httpBackend.flush();
         });
-    })
+    });
 
     describe("project controller", function(){
         var ProjectCtrl, $rootScope;
@@ -117,7 +117,7 @@ describe("Unit: app", function () {
             $rootScope = _$rootScope_;
             spyOn($rootScope, '$broadcast');
             scope.update = function(){};
-            $httpBackend.whenGET("/api/projects/?format=json").respond(projects);
+            $httpBackend.whenGET("/api/projects/1/?format=json").respond(projects[0]);
             scope.project = projects[0];
             ProjectCtrl = $controller("ProjectCtrl", {$scope: scope});
             $httpBackend.flush();
@@ -143,19 +143,17 @@ describe("Unit: app", function () {
         });
 
         it("toggle task status send request", function(){
-            $httpBackend.whenPUT("/api/tasks/1/?format=json").respond(200, '');
-            $httpBackend.whenGET("/api/tasks/?format=json").respond(tasks);
+            $httpBackend.whenPUT("/api/tasks/?format=json").respond(200, '');
+            $httpBackend.whenGET("/api/tasks/1/?format=json").respond(tasks);
             scope.toggleTaskStatus(tasks[0]);
-            $httpBackend.expectGET("/api/tasks/?format=json");
-            $httpBackend.expectPUT("/api/tasks/1/?format=json");
+            $httpBackend.expectGET("/api/tasks/1/?format=json");
+            $httpBackend.expectPUT("/api/tasks/?format=json");
             $httpBackend.flush();
         });
 
         it("delete task send request", function(){
             $httpBackend.whenDELETE("/api/tasks/2/?format=json").respond(200, '');
-            $httpBackend.whenGET("/api/tasks/?format=json").respond(tasks);
             scope.deleteTask(tasks[1]);
-            $httpBackend.expectGET("/api/tasks/?format=json");
             $httpBackend.expectDELETE("/api/tasks/2/?format=json");
             $httpBackend.flush();
         });
@@ -170,7 +168,7 @@ describe("Unit: app", function () {
             expect($rootScope.$broadcast).toHaveBeenCalledWith("editTask", tasks[0]);
         });
 
-    })
+    });
 
     describe("edit project controller", function(){
         var EditProjectCtrl;
@@ -186,11 +184,11 @@ describe("Unit: app", function () {
 
         it("save project", function(){
             scope.project = projects[0];
-            $httpBackend.whenGET("/api/projects/?format=json").respond(projects);
-            $httpBackend.whenPUT("/api/projects/1/?format=json").respond(200, '');
+            $httpBackend.whenGET("/api/projects/1/?format=json").respond(projects);
+            $httpBackend.whenPUT("/api/projects/?format=json").respond(200, '');
             scope.save();
-            $httpBackend.expectGET("/api/projects/?format=json");
-            $httpBackend.expectPUT("/api/projects/1/?format=json");
+            $httpBackend.expectGET("/api/projects/1/?format=json");
+            $httpBackend.expectPUT("/api/projects/?format=json");
             $httpBackend.flush();
         });
     });
@@ -213,11 +211,11 @@ describe("Unit: app", function () {
             scope.task = tasks[1];
             scope.content = tasks[1].content;
             scope.deadline = "";
-            $httpBackend.whenGET("/api/tasks/?format=json").respond(tasks);
-            $httpBackend.whenPUT("/api/tasks/2/?format=json").respond(200, '');
+            $httpBackend.whenGET("/api/tasks/2/?format=json").respond(tasks);
+            $httpBackend.whenPUT("/api/tasks/?format=json").respond(200, '');
             scope.save();
-            $httpBackend.expectGET("/api/tasks/?format=json");
-            $httpBackend.expectPUT("/api/tasks/2/?format=json");
+            $httpBackend.expectGET("/api/tasks/2/?format=json");
+            $httpBackend.expectPUT("/api/tasks/?format=json");
             $httpBackend.flush();
         });
     });

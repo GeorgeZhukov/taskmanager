@@ -95,10 +95,25 @@ app.factory("modal", function () {
 });
 
 
-app.factory("project", function (Restangular) {
-    return Restangular.all('projects');
+app.factory("projects", function (Restangular) {
+    return {
+        all : function(){
+            return Restangular.all('projects');
+        },
+        byId: function(id){
+            return Restangular.one('projects', id);
+        }
+    }
 });
 
-app.factory("task", function (Restangular) {
-    return Restangular.all('tasks');
+app.factory("tasks", function (Restangular) {
+    return {
+        all: function(){
+            return Restangular.all('tasks');
+        },
+        byId: function(id){
+            return Restangular.one('tasks', id);
+        }
+    }
+
 });

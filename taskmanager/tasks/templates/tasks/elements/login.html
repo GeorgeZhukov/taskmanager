@@ -1,6 +1,7 @@
 {% load i18n bootstrap3 %}
 <!-- Modal -->
-<div class="modal fade" data-backdrop="static" data-keyboard="false" ng-controller="LoginCtrl" ng-model="user" id="LoginModal" tabindex="-1" role="dialog"
+<div class="modal fade" data-backdrop="static" data-keyboard="false" ng-controller="LoginCtrl" ng-model="user"
+     id="LoginModal" tabindex="-1" role="dialog"
      aria-labelledby="LoginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <form name="{{ login_form.form_name }}" ng-submit="login();" class="form" novalidate>
@@ -12,9 +13,10 @@
                     {{ login_form }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#SignUpModal">{% trans 'Sign Up' %}</button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#SignUpModal"><span
+                            class="glyphicon glyphicon-user"></span> {% trans 'Sign Up' %}</button>
                     <button type="submit" class="btn btn-primary"
-                            ng-disabled="{{ login_form.form_name }}.$invalid">{% trans 'Sign In' %}</button>
+                            ng-disabled="{{ login_form.form_name }}.$invalid"><span class="glyphicon glyphicon-log-in"></span> {% trans 'Sign In' %}</button>
                 </div>
             </div>
         </form>
