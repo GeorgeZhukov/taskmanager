@@ -42,7 +42,11 @@ describe("Unit: app", function () {
         hideEditProjectModal: function () {},
         showEditTaskModal: function(){},
         hideEditTaskModal: function(){},
-        hideNewProjectModal: function(){}
+        hideNewProjectModal: function(){},
+        hideLoginModal: function(){},
+        hideLogoutModal: function(){},
+        showLoginModal: function(){},
+        hideSignUpModal: function(){}
     };
 
     beforeEach(function(){
@@ -110,6 +114,51 @@ describe("Unit: app", function () {
         });
     });
 
+    describe("login controller", function(){
+        var LoginCtrl;
+
+        beforeEach(inject(function(){
+            LoginCtrl = $controller("LoginCtrl", {$scope: scope, modal: modalService});
+        }));
+
+        it("login send request", function(){
+            $httpBackend.whenPUT("/api/auth/").respond(200, '');
+            scope.username = "username";
+            scope.password = "password";
+            scope.login();
+            $httpBackend.expectPUT("/api/auth/");
+            $httpBackend.flush();
+        });
+    });
+
+    describe("logout controller", function(){
+        var LogoutCtrl;
+        beforeEach(inject(function(){
+            LogoutCtrl = $controller("LogoutCtrl", {$scope: scope, modal: modalService});
+        }));
+
+        it("logout send request", function(){
+            $httpBackend.whenDELETE("/api/auth/").respond(200, '');
+            scope.logout();
+            $httpBackend.expectDELETE("/api/auth/");
+            $httpBackend.flush();
+        });
+    });
+
+    describe("sign up controller", function(){
+        var SignUpCtrl;
+        beforeEach(inject(function(){
+            SignUpCtrl = $controller("SignUpCtrl", {$scope: scope, modal: modalService});
+        }));
+
+        it("sign up send request", function(){
+            $httpBackend.whenPOST("/api/auth/").respond(201, '');
+            scope.signup();
+            $httpBackend.expectPOST("/api/auth/");
+            $httpBackend.flush();
+        });
+    });
+
     describe("project controller", function(){
         var ProjectCtrl, $rootScope;
 
@@ -133,6 +182,25 @@ describe("Unit: app", function () {
             scope.delete();
             $httpBackend.expectDELETE("/api/projects/1/?format=json");
             $httpBackend.flush();
+        });
+
+        it("move task up", function(){
+            $httpBackend.whenGET("/api/tasks/1/?format=json").respond(tasks[0]);
+            $httpBackend.whenPUT("/api/tasks/1/?format=json").respond(200, '');
+            scope.moveUpTask(tasks[0]);
+            $httpBackend.expectGET("/api/tasks/1/?format=json");
+            $httpBackend.expectPUT("/api/tasks/1/?format=json");
+            $httpBackend.flush();
+
+        });
+        it("move task down", function(){
+            $httpBackend.whenGET("/api/tasks/2/?format=json").respond(tasks[1]);
+            $httpBackend.whenPUT("/api/tasks/2/?format=json").respond(200, '');
+            scope.moveDownTask(tasks[1]);
+            $httpBackend.expectGET("/api/tasks/2/?format=json");
+            $httpBackend.expectPUT("/api/tasks/2/?format=json");
+            $httpBackend.flush();
+
         });
 
         it("add task send request", function(){
