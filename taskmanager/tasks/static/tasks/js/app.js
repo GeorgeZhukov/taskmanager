@@ -201,30 +201,20 @@ app.controller('ProjectCtrl', function ($scope, $rootScope, projects, tasks, not
     };
 
     $scope.moveUpTask = function (taskInstance) {
-        tasks.all().getList().then(function (tasks) {
-            var theTask = _.find(tasks, function (task) {
-                return task.id === taskInstance.id;
-            });
-
-            theTask.order_id -= 1;
-            theTask.put().then(function () {
+        tasks.byId(taskInstance.id).get().then(function(task){
+            task.order_id -= 1;
+            task.put().then(function () {
                 $scope.updateProject();
             });
-
         });
     };
 
     $scope.moveDownTask = function (taskInstance) {
-        tasks.all().getList().then(function (tasks) {
-            var theTask = _.find(tasks, function (task) {
-                return task.id === taskInstance.id;
-            });
-
-            theTask.order_id += 1;
-            theTask.put().then(function () {
+        tasks.byId(taskInstance.id).get().then(function(task){
+            task.order_id += 1;
+            task.put().then(function () {
                 $scope.updateProject();
             });
-
         });
     };
 
